@@ -135,15 +135,15 @@ function Background() {
       let nextColorIndex = 1;
       let lerpFactor = 0; // Interpolation factor (0 to 1)
   
+      let downDir = 1;
+      let upDir = 1;
       window.addEventListener('mousemove', (event) => {
         if (isMouseDown) {
-          onMouseMove(event, 1);
+          onMouseMove(event, downDir);
         } else {
-          onMouseMove(event, -1);
+          onMouseMove(event, upDir);
         }
         const color = particlesMesh.material.color;
-
-        // console.log(color);
 
         // Lerp between current and next colors
         const currentColor = presetColors[currentColorIndex];
@@ -163,7 +163,6 @@ function Background() {
 
       let isMouseDown = false;
       let intervalId = null;
-      let targetPositions = new Float32Array(particlesCount * 3); 
 
       window.addEventListener('mousedown', (event) => {
         isMouseDown = true;
@@ -175,6 +174,7 @@ function Background() {
             originalPosArray[i] = originalPosArray[i] * 10;
           }
           isExpanded = true;
+          upDir = -1;
         }
       });
 
@@ -203,9 +203,9 @@ function Background() {
           const targetZ = originalPosArray[i+2] + Math.sin(scrollFactor + i * 0.05) * 0.2;
           
           // Gradually move towards target position (allows mouse interactions to blend naturally)
-          positions[i] += (targetX - positions[i]) * 0.1;
-          positions[i+1] += (targetY - positions[i+1]) * 0.1;
-          positions[i+2] += (targetZ - positions[i+2]) * 0.1;
+          positions[i] += (targetX - positions[i]) * 0.01;
+          positions[i+1] += (targetY - positions[i+1]) * 0.01;
+          positions[i+2] += (targetZ - positions[i+2]) * 0.01;
 
         }
                 
@@ -247,8 +247,8 @@ function Background() {
     return (
       <div 
         ref={mountRef} 
-        className="fixed inset-0 z-0"
-        style={{ zIndex: 0 }}
+        className="fixed inset-0 z-5"
+        style={{ zIndex: 5 }}
       />
     );
   }

@@ -8,6 +8,20 @@ function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [time, setTime] = useState(new Date().toLocaleString("en-US", { dateStyle: "full", timeStyle: undefined }));
+  const [isClicked, setIsClicked] = useState(false);
+
+  useEffect(() => {
+    // Disable scrolling initially
+    if (!isClicked) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  }, [isClicked]);
+
+  const handleFirstClick = () => {
+    setIsClicked(true);
+  };
   
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -30,6 +44,21 @@ function App() {
   // }, []);
 
   return (
+    <div onClick={handleFirstClick} className="relative">
+      <Background />
+      {!isClicked && (
+        <div className="fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4">
+          {/* <Background /> */}
+          <h1 className="text-3xl font-bold relative z-20">Click to Enter</h1>
+          {/* <button className={`'text-white-400'}`}>Click to Enter</button> */}
+          {/* <button
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-lg transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+          >
+            Click to Enter
+          </button> */}
+        </div>
+      )}
+      {isClicked && (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white">
       {/* Navigation */}
       <nav className="fixed w-full bg-gray-900 bg-opacity-90 z-50 shadow-md">
@@ -75,7 +104,7 @@ function App() {
 
       {/* Hero Section with Three.js Background */}
       <section id="home" className="min-h-screen flex items-center justify-center relative">
-        <Background />
+        {/* <Background /> */}
         <div className="text-center z-10 px-4">
           <h1 className="text-5xl md:text-6xl font-bold mb-4">Michael Karb</h1>
           {/* <h2 className="text-2xl md:text-3xl text-blue-400 mb-6 animate-fadeIn">Software Developer</h2> */}
@@ -252,6 +281,8 @@ function App() {
         </div>
       </footer>
     </div>
+      )}
+    </div>
   );
 }
 
@@ -374,7 +405,7 @@ const skills = [
 export default App;
 
 const TypewriterHeader = () => {
-  const fullText = "Software Developer";
+  const fullText = "Click To Enter";
   const [displayText, setDisplayText] = useState("");
   const [index, setIndex] = useState(0);
   
