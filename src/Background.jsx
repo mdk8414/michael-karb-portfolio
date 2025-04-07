@@ -25,8 +25,10 @@ function Background() {
       const posArray = new Float32Array(particlesCount * 3);
       const originalPosArray = new Float32Array(particlesCount * 3);
       
+      let isExpanded = false;
+
       for (let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 10;
+        posArray[i] = (Math.random() - 0.5) * 1;
         originalPosArray[i] = posArray[i]; // Store original positions
       }
       
@@ -56,58 +58,59 @@ function Background() {
       const mousePlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
       const mouseWorldPos = new THREE.Vector3();
       const mouseLocalPos = new THREE.Vector3();
-  
-      const onMouseMove = (event) => {
-        // event.preventDefault();
-        // Calculate normalized device coordinates
+      let count = 0;
+
+      const onMouseMove = (event, forceDir) => {
+        event.preventDefault();
+        
+        // Calculate normalized mouse coordinates
         pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
         pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
+        // Set the raycaster from the camera and mouse position
         raycaster.setFromCamera(pointer, camera);
 
+        // Calculate the mouse position in 3D space by intersecting with the mouse plane
         raycaster.ray.intersectPlane(mousePlane, mouseWorldPos);
 
+        // Conver the mouse world coordinates to local coordinates of the particle mesh
         mouseLocalPos.copy(mouseWorldPos);
         particlesMesh.worldToLocal(mouseLocalPos);
 
+        // Retrieve positions of particles
         const positions = particlesMesh.geometry.attributes.position.array;
 
+        // Iterate through each particle position
         for (let i = 0; i < positions.length; i += 3) {
 
+          // Create a position vector for this particle position
           const particlePosition = new THREE.Vector3(
             positions[i],
             positions[i + 1],
             positions[i + 2]
           );
 
-          // const particleScreenPos = particlePosition;
-
+          // Calculate the distance from the mouse to this particle
           const dx = particlePosition.x  - mouseLocalPos.x;
           const dy = particlePosition.y - mouseLocalPos.y;
           const dz = particlePosition.z - mouseLocalPos.z;
           const distanceToMouse = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-          
-
-          // Apply force if within influence radius (adjust this value)
+          // Establish radius of influence
           const influenceRadius = 2;
+
+          // If the particle is within the influence radius of the mouse
           if (distanceToMouse < influenceRadius) {
-            if (i % 100 === 0) {
-              console.log("PP", particlePosition);
-              console.log("MWP", mouseWorldPos);
-            }
-
-
-            // Direction vector from mouse to particle
+            // Get (normalized) direction vector of particle to mouse
             const direction = new THREE.Vector2(dx / distanceToMouse || 0, dy / distanceToMouse || 0);
 
-            // Force strength (inverse to distance)
-            const force = 0.05 * (1 - distanceToMouse / influenceRadius);
+            // Calculate the force strength based on distance to mouse
+            const force = 0.2 * (1 - distanceToMouse / influenceRadius);
 
 
-            // Apply force
-            positions[i] += direction.x * force;
-            positions[i + 1] += direction.y * force;
+            // Apply force to particle position
+            positions[i] += forceDir * direction.x * force;
+            positions[i + 1] += forceDir * direction.y * force;
             // positions[i + 2] += direction.z * force;
           }
         }
@@ -115,9 +118,70 @@ function Background() {
         particlesMesh.geometry.attributes.position.needsUpdate = true;
       
       };
+
+      function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+      }
+
+      const presetColors = [
+        new THREE.Color(0x3b82f6), // Blue
+        new THREE.Color(0xf000f0), // Purple
+        new THREE.Color(0xff0000),
+        new THREE.Color(0x0000ff), // Dark Blue
+        new THREE.Color(0xffffff), // Dark Blue
+      ];
+
+      let currentColorIndex = 0;
+      let nextColorIndex = 1;
+      let lerpFactor = 0; // Interpolation factor (0 to 1)
   
-      window.addEventListener('mousemove', onMouseMove);
-      
+      window.addEventListener('mousemove', (event) => {
+        if (isMouseDown) {
+          onMouseMove(event, 1);
+        } else {
+          onMouseMove(event, -1);
+        }
+        const color = particlesMesh.material.color;
+
+        // console.log(color);
+
+        // Lerp between current and next colors
+        const currentColor = presetColors[currentColorIndex];
+        const nextColor = presetColors[nextColorIndex];
+        color.lerpColors(currentColor, nextColor, lerpFactor);
+
+        // Increment lerp factor
+        lerpFactor += 0.003; // Adjust speed of transition
+        if (lerpFactor >= 1) {
+          lerpFactor = 0;
+          currentColorIndex = nextColorIndex;
+          nextColorIndex = (nextColorIndex + 1) % presetColors.length; // Loop through colors
+        }
+
+
+      });
+
+      let isMouseDown = false;
+      let intervalId = null;
+      let targetPositions = new Float32Array(particlesCount * 3); 
+
+      window.addEventListener('mousedown', (event) => {
+        isMouseDown = true;
+        intervalId = setInterval(() => { onMouseMove(event, 0.5) });
+
+        if (!isExpanded) {
+          // Expand particles
+          for (let i = 0; i < particlesCount * 3; i++) {
+            originalPosArray[i] = originalPosArray[i] * 10;
+          }
+          isExpanded = true;
+        }
+      });
+
+      window.addEventListener('mouseup', (event) => {
+        isMouseDown = false;
+        clearInterval(intervalId);
+      })
       // Animation
       const animate = () => {
         requestAnimationFrame(animate);
@@ -174,88 +238,19 @@ function Background() {
         }
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('mousemove', onMouseMove);
+
+        renderer.dispose();
       };
     }, []);
   
     return (
       <div 
         ref={mountRef} 
-        className="fixed inset-0"
+        className="fixed inset-0 z-0"
         style={{ zIndex: 0 }}
       />
     );
   }
   
-export default Background;
-
-
-// Three.js Background Component
-// function ThreeJsBackground() {
-//   const mountRef = useRef(null);
-
-//   useEffect(() => {
-//     if (!mountRef.current) return;
-
-//     // Scene setup
-//     const scene = new THREE.Scene();
-//     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-//     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    
-//     renderer.setSize(window.innerWidth, window.innerHeight);
-//     renderer.setPixelRatio(window.devicePixelRatio);
-//     mountRef.current.appendChild(renderer.domElement);
-
-//     // Create particles
-//     const particlesGeometry = new THREE.BufferGeometry();
-//     const particlesCount = 1500;
-    
-//     const posArray = new Float32Array(particlesCount * 3);
-//     for (let i = 0; i < particlesCount * 3; i++) {
-//       posArray[i] = (Math.random() - 0.5) * 10;
-//     }
-    
-//     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    
-//     const particlesMaterial = new THREE.PointsMaterial({
-//       size: 0.02,
-//       color: 0x3b82f6, // Blue color
-//     });
-    
-//     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-//     scene.add(particlesMesh);
-
-//     // Position camera
-//     camera.position.z = 3;
-    
-//     // Animation
-//     const animate = () => {
-//       requestAnimationFrame(animate);
-      
-//       particlesMesh.rotation.x += 0.0005;
-//       particlesMesh.rotation.y += 0.0005;
-      
-//       renderer.render(scene, camera);
-//     };
-    
-//     animate();
-
-//     // Handle window resize
-//     const handleResize = () => {
-//       camera.aspect = window.innerWidth / window.innerHeight;
-//       camera.updateProjectionMatrix();
-//       renderer.setSize(window.innerWidth, window.innerHeight);
-//     };
-    
-//     window.addEventListener('resize', handleResize);
-    
-//     // Cleanup
-//     return () => {
-//       if (mountRef.current) {
-//         mountRef.current.removeChild(renderer.domElement);
-//       }
-//       window.removeEventListener('resize', handleResize);
-//     };
-//   }, []);
-
-//   return <div ref={mountRef} className="absolute inset-0" />;
-// }
+export default React.memo(Background);
