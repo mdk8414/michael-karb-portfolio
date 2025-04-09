@@ -241,6 +241,9 @@ function Background() {
       if (isExpanded) {
         particlesMesh.rotation.x += 0.001;
         particlesMesh.rotation.y += 0.001;
+        particlesMesh.rotation.z += 0.001;
+      } else {
+        particlesMesh.rotation.z += 0.001;
       }
 
       
