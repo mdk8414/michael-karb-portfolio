@@ -406,7 +406,18 @@ const skills = [
 export default App;
 
 const TypewriterHeader = () => {
-  const fullText = "Click To Enter";
+  const texts = [ "Click To Enter.", 
+                  "I know the particles \nlook cool.", 
+                  "I spent too much \ntime trying to make\nthem perfect.",
+                  "I'm glad you \nlike them.",
+                  "I hope you \nlike the website.",
+                  "I hope you \nlike my work.",
+                  "I hope you \nlike me.",
+                  "You can click now.",
+                  "Kinda weird \nyou still \nhaven't clicked.",
+                  "....." ];
+  const [textIndex, setTextIndex] = useState(0);
+  const [fullText, setFullText] = useState(texts[0]);
   const [displayText, setDisplayText] = useState("");
   const [index, setIndex] = useState(0);
   const [forward, setForward] = useState(true);
@@ -435,11 +446,18 @@ const TypewriterHeader = () => {
         if (index === 1) {
           setIsPaused(true);
           setTimeout(() => setIsPaused(false), 2000);
+          setTextIndex((prevIndex) => {
+            const newIndex = (prevIndex + 1) % texts.length;
+            setFullText(texts[newIndex]);
+            return newIndex;
+          })
           setForward(true);
         }
       }
          
-    }, 100);
+    }, ((textIndex === texts.length - 1) ? 500 : 100));
+
+    
       
     return () => clearTimeout(timeout);
     
@@ -447,7 +465,12 @@ const TypewriterHeader = () => {
   
   return (
     <h2 className="text-2xl md:text-3xl text-white-400 mb-6 font-mono">
-      {displayText}
+      {displayText.split('\n').map((line, index, array) => (
+      <React.Fragment key={index}>
+        {line}
+        {index < array.length - 1 ? <br /> : null}
+      </React.Fragment>
+    ))}
       <span className="animate-blink">|</span>
     </h2>
   );
