@@ -408,7 +408,7 @@ export default App;
 const TypewriterHeader = () => {
   const texts = [ "Click To Enter.", 
                   "I know the particles \nlook cool.", 
-                  "I spent too much \ntime trying to make\nthem perfect.",
+                  "I spent a lot of \ntime trying to make\nthem perfect.",
                   "I'm glad you \nlike them.",
                   "I hope you \nlike the website.",
                   "I hope you \nlike my work.",
@@ -464,7 +464,7 @@ const TypewriterHeader = () => {
   }, [index, fullText, forward, isPaused]);
   
   return (
-    <h2 className="text-2xl md:text-3xl text-white-400 mb-6 font-mono">
+    <h2 className="text-2xl md:text-3xl text-center text-white-400 mb-6 font-mono">
       {displayText.split('\n').map((line, index, array) => (
       <React.Fragment key={index}>
         {line}
