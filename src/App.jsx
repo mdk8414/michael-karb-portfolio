@@ -49,7 +49,8 @@ function App() {
       {!isClicked && (
         <div className="fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4">
           {/* <Background /> */}
-          <h1 className="text-3xl font-bold relative z-20">Click to Enter</h1>
+          {/* <h1 className="text-3xl font-bold relative z-20">Click to Enter</h1> */}
+          <TypewriterHeader />
           {/* <button className={`'text-white-400'}`}>Click to Enter</button> */}
           {/* <button
             className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-lg transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
@@ -408,22 +409,46 @@ const TypewriterHeader = () => {
   const fullText = "Click To Enter";
   const [displayText, setDisplayText] = useState("");
   const [index, setIndex] = useState(0);
+  const [forward, setForward] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
   
   useEffect(() => {
-    if (index < fullText.length) {
-      const timeout = setTimeout(() => {
+    if (isPaused) return;
+   
+    const timeout = setTimeout(() => {
+      console.log("index", index);  
+      if (forward) {
         setDisplayText(prev => prev + fullText[index]);
         setIndex(index + 1);
-      }, 100);
+
+        if (index === fullText.length - 1) {
+          setIsPaused(true);
+          setTimeout(() => setIsPaused(false), 2000);
+          setForward(false);
+        }
+  
+      } else {
+        
+        setDisplayText(prev => prev.slice(0, -1));
+        setIndex(index - 1);
+
+        if (index === 1) {
+          setIsPaused(true);
+          setTimeout(() => setIsPaused(false), 2000);
+          setForward(true);
+        }
+      }
+         
+    }, 100);
       
-      return () => clearTimeout(timeout);
-    }
-  }, [index, fullText]);
+    return () => clearTimeout(timeout);
+    
+  }, [index, fullText, forward, isPaused]);
   
   return (
-    <h2 className="text-2xl md:text-3xl text-blue-400 mb-6">
+    <h2 className="text-2xl md:text-3xl text-white-400 mb-6 font-mono">
       {displayText}
-      <span className="animate-pulse">|</span>
+      <span className="animate-blink">|</span>
     </h2>
   );
 };
