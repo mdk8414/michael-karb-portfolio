@@ -307,6 +307,7 @@ function Background({ isExpanded, setIsExpanded}) {
             for (let i = 0; i < particlesCount * 3; i++) {
               originalPosArray[i] = originalPosArray[i] * expandFactor;
             }
+            isExpanded = true;
             setIsExpanded(true);
             upDir = -0.5;
             implosionStartTime = null;
