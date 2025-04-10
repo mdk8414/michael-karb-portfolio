@@ -214,7 +214,17 @@ function Background() {
 
     window.addEventListener('mousedown', (event) => {
       isMouseDown = true;
-      intervalId = setInterval(() => { onMouseMove(event, 0.5) });
+      
+      intervalId = setInterval(() => { 
+          // Calculate normalized mouse coordinates
+        // pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+        // pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        if (!isExpanded) return;
+
+        moveParticlesWithMouse(0.5, 2);
+
+      });
     });
 
     window.addEventListener('mouseup', (event) => {
@@ -233,6 +243,11 @@ function Background() {
     })
 
 
+
+    let gravity = -0.01;
+
+    let implosionDuration = 3000;
+    let runImplosion = false; 
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -268,10 +283,23 @@ function Background() {
 
       }
 
+      
       if (!isExpanded) {
-        moveParticlesAwayFromCenter(0.5, 1.5);
-        moveParticlesWithMouse(0.5, 1.5);
+        if (!isMouseDown) {
+          moveParticlesAwayFromCenter(0.5, 1.5);
+          moveParticlesWithMouse(0.5, 1.5);
+        } 
+        else {
+          // moveParticlesWithMouse(gravity, 3);
+          moveParticlesAwayFromCenter(gravity, 3);
+          gravity = Math.max(gravity - 0.001, -100);
+          // console.log(gravity);
+        }
       }
+
+      
+
+
               
       particlesMesh.geometry.attributes.position.needsUpdate = true;
       
