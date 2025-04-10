@@ -9,6 +9,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [time, setTime] = useState(new Date().toLocaleString("en-US", { dateStyle: "full", timeStyle: undefined }));
   const [isClicked, setIsClicked] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     // Disable scrolling initially
@@ -45,21 +46,13 @@ function App() {
 
   return (
     <div onClick={handleFirstClick} className="relative">
-      <Background />
-      {!isClicked && (
+      <Background isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+      {!isExpanded && (
         <div className="fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4">
-          {/* <Background /> */}
-          {/* <h1 className="text-3xl font-bold relative z-20">Click to Enter</h1> */}
           <TypewriterHeader />
-          {/* <button className={`'text-white-400'}`}>Click to Enter</button> */}
-          {/* <button
-            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-lg transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-          >
-            Click to Enter
-          </button> */}
         </div>
       )}
-      {isClicked && (
+      {isExpanded && (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white">
       {/* Navigation */}
       <nav className="fixed w-full bg-gray-900 bg-opacity-90 z-50 shadow-md">
@@ -412,7 +405,7 @@ const TypewriterHeader = () => {
                   "I'm glad you \nlike them.",
                   "I hope you \nlike the website.",
                   "I hope you \nlike my work.",
-                  "I hope you \nlike me.",
+                  // "I hope you \nlike me.",
                   "You can click now.",
                   "Kinda weird \nyou still \nhaven't clicked.",
                   "....." ];
@@ -455,7 +448,7 @@ const TypewriterHeader = () => {
         }
       }
          
-    }, ((textIndex === texts.length - 1) ? 500 : 100));
+    }, ((textIndex === texts.length - 1) ? 500 : (forward ? 100 : 25)));
 
     
       

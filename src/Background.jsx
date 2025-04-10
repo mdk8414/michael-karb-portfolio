@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 
-function Background() {
+function Background({ isExpanded, setIsExpanded}) {
   const mountRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
 
@@ -25,7 +25,7 @@ function Background() {
     const posArray = new Float32Array(particlesCount * 3);
     const originalPosArray = new Float32Array(particlesCount * 3);
     
-    let isExpanded = false;
+    // let isExpanded = false;
 
     for (let i = 0; i < particlesCount * 3; i++) {
       posArray[i] = (Math.random() - 0.5) * 1;   
@@ -99,7 +99,9 @@ function Background() {
     const mouseLocalPos = new THREE.Vector3();
     let count = 0;
 
+    let disableMouseParticleMovement = false;
     const moveParticlesWithMouse = (forceDir, influenceRadius) => {
+      if (disableMouseParticleMovement) return;
       // Set the raycaster from the camera and mouse position
       raycaster.setFromCamera(pointer, camera);
 
@@ -150,6 +152,8 @@ function Background() {
               
       particlesMesh.geometry.attributes.position.needsUpdate = true;
     }
+
+    let implosionStartTime = null;
 
     const onMouseMove = (event, forceDir) => {
       
@@ -220,8 +224,6 @@ function Background() {
         // pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
         // pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-        if (!isExpanded) return;
-
         moveParticlesWithMouse(0.5, 2);
 
       });
@@ -229,15 +231,20 @@ function Background() {
 
     window.addEventListener('mouseup', (event) => {
       isMouseDown = false;
-      
-      if (!isExpanded) {
-        // Big bang explosion
-        for (let i = 0; i < particlesCount * 3; i++) {
-          originalPosArray[i] = originalPosArray[i] * expandFactor;
-        }
-        isExpanded = true;
-        upDir = -0.5;
+
+      if (!isExpanded && implosionStartTime === null) {
+        implosionStartTime = Date.now();
+        // return;
       }
+      
+      // if (!isExpanded) {
+      //   // Big bang explosion
+      //   for (let i = 0; i < particlesCount * 3; i++) {
+      //     originalPosArray[i] = originalPosArray[i] * expandFactor;
+      //   }
+      //   isExpanded = true;
+      //   upDir = -0.5;
+      // }
 
       clearInterval(intervalId);
     })
@@ -245,9 +252,6 @@ function Background() {
 
 
     let gravity = -0.01;
-
-    let implosionDuration = 3000;
-    let runImplosion = false; 
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -282,25 +286,35 @@ function Background() {
         
 
       }
-
       
       if (!isExpanded) {
-        if (!isMouseDown) {
+        if (!isMouseDown && implosionStartTime === null) {
           moveParticlesAwayFromCenter(0.5, 1.5);
           moveParticlesWithMouse(0.5, 1.5);
         } 
-        else {
-          // moveParticlesWithMouse(gravity, 3);
-          moveParticlesAwayFromCenter(gravity, 3);
-          gravity = Math.max(gravity - 0.001, -100);
-          // console.log(gravity);
+
+        if (implosionStartTime !== null) {
+          disableMouseParticleMovement = true;
+          const elapsedTime = Date.now() - implosionStartTime;
+          // Implosion animation should last 5 seconds
+          if (elapsedTime < 2000) {
+            // Animate implosion
+            moveParticlesAwayFromCenter(gravity, 3);
+            gravity = Math.max(gravity - 0.0015, -100);
+          } 
+          else {
+            // Big bang explosion
+            for (let i = 0; i < particlesCount * 3; i++) {
+              originalPosArray[i] = originalPosArray[i] * expandFactor;
+            }
+            setIsExpanded(true);
+            upDir = -0.5;
+            implosionStartTime = null;
+            disableMouseParticleMovement = false;
+          }
         }
       }
-
-      
-
-
-              
+        
       particlesMesh.geometry.attributes.position.needsUpdate = true;
       
       // Camera movement based on scroll
