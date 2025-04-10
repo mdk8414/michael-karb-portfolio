@@ -47,15 +47,15 @@ function App() {
   return (
     <div onClick={handleFirstClick} className="relative">
       <Background isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-      {!isExpanded && (
-        <div className="fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4">
-          <TypewriterHeader />
-        </div>
-      )}
-      {isExpanded && (
-    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
+      <div className={`fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4 ${isExpanded ? 'hidden' : 'zoom-in'}`}>
+        <TypewriterHeader />
+      </div>
+      
+      
+    <div className={`flex flex-col min-h-screen bg-gray-900 text-white`}>
+      <div className={`${isExpanded ? '' : 'hidden'}`}>
       {/* Navigation */}
-      <nav className="fixed w-full bg-gray-900 bg-opacity-90 z-50 shadow-md">
+      <nav className={`fixed w-full bg-gray-900 bg-opacity-90 z-50 shadow-md slide-in`}>
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             <div className="text-xl font-bold">Michael Karb</div>
@@ -97,7 +97,7 @@ function App() {
       </nav>
 
       {/* Hero Section with Three.js Background */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative">
+      <section id="home" className="min-h-screen flex items-center justify-center relative zoom-in">
         {/* <Background /> */}
         <div className="text-center z-10 px-4">
           <h1 className="text-5xl md:text-6xl font-bold mb-4">Michael Karb</h1>
@@ -132,7 +132,7 @@ function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-4 relative z-10">
+      <section id="about" className="py-20 px-4 relative z-10 zoom-in">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center">About me</h2>
           <div className="flex flex-col md:flex-row items-center gap-8">
@@ -173,7 +173,7 @@ function App() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 bg-gray-800 ">
+      <section id="projects" className="py-20 px-4 bg-gray-800 zoom-in">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center relative z-10">My Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
@@ -185,7 +185,7 @@ function App() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 px-4 relative z-10">
+      <section id="skills" className="py-20 px-4 relative z-10 zoom-in">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center">Skills & Technologies</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -197,7 +197,7 @@ function App() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 bg-gray-800">
+      <section id="contact" className="py-20 px-4 bg-gray-800 zoom-in">
         <div className="max-w-4xl mx-auto relative z-10">
           <h2 className="text-3xl font-bold mb-12 text-center">Get In Touch</h2>
           <div className="flex flex-col md:flex-row gap-8">
@@ -265,7 +265,7 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 bg-gray-900 border-t border-gray-800">
+      <footer className="py-8 px-4 bg-gray-900 border-t border-gray-800 zoom-in">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="flex gap-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-blue-400 transition">GitHub</a>
@@ -274,8 +274,8 @@ function App() {
           </div>
         </div>
       </footer>
+      </div>
     </div>
-      )}
     </div>
   );
 }
@@ -420,7 +420,7 @@ const TypewriterHeader = () => {
     if (isPaused) return;
    
     const timeout = setTimeout(() => {
-      console.log("index", index);  
+      // console.log("index", index);  
       if (forward) {
         setDisplayText(prev => prev + fullText[index]);
         setIndex(index + 1);

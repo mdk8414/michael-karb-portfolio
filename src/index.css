@@ -21,6 +21,64 @@ code {
   height: 100vh;
 }
 
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+    opacity: 1;
+  } to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  } to {
+    transform: scale(0);
+    opacity: 1;
+  }
+}
+
+.zoom-in {
+  animation: zoomIn 1s ease-out forwards;
+}
+
+.zoom-out {
+  animation: zoomOut 1s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.slide-in {
+  animation: slideIn 1s ease-out forwards;
+}
+
+.slide-out {
+  animation: slideOut 1s ease-out forwards;
+}
+
 @keyframes blink {
   0%, 100% {
     opacity: 1;
