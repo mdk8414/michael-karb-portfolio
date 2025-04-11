@@ -176,9 +176,8 @@ function Background({ isExpanded, setIsExpanded}) {
     const presetColors = [
       new THREE.Color(0x3b82f6), // Blue
       new THREE.Color(0xf000f0), // Purple
-      new THREE.Color(0xff0000),
-      new THREE.Color(0x0000ff), // Dark Blue
-      new THREE.Color(0xffffff), // Dark Blue
+      new THREE.Color(0xff0000), // Red
+      new THREE.Color(0x00ccff), // Cyan
     ];
 
     let currentColorIndex = 0;
@@ -296,11 +295,11 @@ function Background({ isExpanded, setIsExpanded}) {
         if (implosionStartTime !== null) {
           disableMouseParticleMovement = true;
           const elapsedTime = Date.now() - implosionStartTime;
-          // Implosion animation should last 5 seconds
-          if (elapsedTime < 2000) {
+          // Implosion animation should last 4 seconds
+          if (elapsedTime < 4000) {
             // Animate implosion
             moveParticlesAwayFromCenter(gravity, 3);
-            gravity = Math.max(gravity - 0.0015, -100);
+            gravity = Math.max(gravity - 0.005, -10);
           } 
           else {
             // Big bang explosion

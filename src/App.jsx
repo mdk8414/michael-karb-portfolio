@@ -53,9 +53,9 @@ function App() {
       
       
     <div className={`flex flex-col min-h-screen bg-gray-900 text-white`}>
-      <div className={`${isExpanded ? '' : 'hidden'}`}>
+      <div className={`z-10 ${isExpanded ? '' : 'hidden'}`}>
       {/* Navigation */}
-      <nav className={`fixed w-full bg-gray-900 bg-opacity-90 z-50 shadow-md slide-in`}>
+      <nav className={`fixed w-full bg-gray-900/90 z-50 shadow-md slide-in`}>
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             <div className="text-xl font-bold">Michael Karb</div>
@@ -132,7 +132,7 @@ function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-4 relative z-10 zoom-in">
+      <section id="about" className="py-20 px-4 relative zoom-in">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center">About me</h2>
           <div className="flex flex-col md:flex-row items-center gap-8">
@@ -173,7 +173,7 @@ function App() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 bg-gray-800 zoom-in">
+      <section id="projects" className="py-20 px-4 bg-gray-800/50 zoom-in">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center relative z-10">My Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
@@ -197,7 +197,7 @@ function App() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 bg-gray-800 zoom-in">
+      <section id="contact" className="py-20 px-4 bg-gray-800/50 zoom-in">
         <div className="max-w-4xl mx-auto relative z-10">
           <h2 className="text-3xl font-bold mb-12 text-center">Get In Touch</h2>
           <div className="flex flex-col md:flex-row gap-8">
