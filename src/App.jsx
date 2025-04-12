@@ -10,6 +10,8 @@ function App() {
   const [time, setTime] = useState(new Date().toLocaleString("en-US", { dateStyle: "full", timeStyle: undefined }));
   const [isClicked, setIsClicked] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [particlesCount, setParticlesCount] = useState(10000);
+  const [particleMeshRadius, setParticleMeshRadius] = useState(10);
 
   useEffect(() => {
     // Disable scrolling initially
@@ -46,8 +48,8 @@ function App() {
 
   return (
     <div onClick={handleFirstClick} className="relative">
-      <Background isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-      <div className={`fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4 ${isExpanded ? 'hidden' : 'zoom-in'}`}>
+      <Background isExpanded={isExpanded} setIsExpanded={setIsExpanded} particlesCount={particlesCount} particleMeshRadius={particleMeshRadius} />  
+      <div className={`fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4 ${isExpanded ? 'hidden' : ''}`}>
         <TypewriterHeader />
       </div>
       
@@ -93,6 +95,14 @@ function App() {
               </div>
             </div>
           )}
+          <div className="slider-wrapper">
+            <div>
+              <Slider text={"Particles Count"} min={"0"} max={"100000"} value={particlesCount} setValue={setParticlesCount}/>
+            </div>  
+            <div>
+              <Slider text={"Radius"} min={1} max={50} value={particleMeshRadius} setValue={setParticleMeshRadius}/>
+            </div>  
+          </div>
         </div>
       </nav>
 
@@ -466,5 +476,64 @@ const TypewriterHeader = () => {
     ))}
       <span className="animate-blink">|</span>
     </h2>
+  );
+};
+
+const Slider = ({text, min, max, value, setValue}) => {
+
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleMouseDown = () => {
+    setIsDragging(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (event) => {
+    if (isDragging) {
+      const sliderRect = event.currentTarget.getBoundingClientRect();
+      const percentage = Math.min(Math.max(0, (event.clientX - sliderRect.left) / sliderRect.width), 1);
+      const newValue = Math.max(min, Math.round(percentage * max));
+      setValue(newValue);
+    }
+  };
+
+  const handleChange = (event) => {
+    // event.stopPropagation();
+    setValue(event.target.value);
+  };
+
+  useEffect(() => {
+    // Add global mouse up event to handle releasing outside the slider
+    const handleGlobalMouseUp = () => {
+      setIsDragging(false);
+    };
+    
+    if (isDragging) {
+      window.addEventListener('mouseup', handleGlobalMouseUp);
+    }
+    
+    return () => {
+      window.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging]);
+
+  return (
+    <div className="slider-container">
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={value}
+        onChange={handleChange}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        className="slider"
+      />
+      <p>{text}: {value}</p>
+    </div>
   );
 };

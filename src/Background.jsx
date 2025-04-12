@@ -2,47 +2,71 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 
-function Background({ isExpanded, setIsExpanded}) {
+function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRadius }) {
   const mountRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
+  // const [prevRadius, setPrevRadius] = useState(particleMeshRadius);
+
+  const prevRadiusRef = useRef(particleMeshRadius);
+
+  // Scene setup
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+
+  const particlesGeometryRef = useRef(null);
+  const particlesMeshRef = useRef(null);
+
+  const originalPosArrayRef = useRef(new Float32Array(particlesCount * 3));
+
+  // const particleMeshRadius = 10;
 
   useEffect(() => {
     if (!mountRef.current) return;
 
-    // Scene setup
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
     mountRef.current.appendChild(renderer.domElement);
 
-    // Create particles
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 10000;
-    
-    const posArray = new Float32Array(particlesCount * 3);
-    const originalPosArray = new Float32Array(particlesCount * 3);
-    
-    // let isExpanded = false;
+    const createParticles = () => {
+      // Remove existing particles if they exist
+      if (particlesMeshRef.current) {
+        scene.remove(particlesMeshRef.current);
+        particlesGeometryRef.current.dispose();
+      }
 
-    for (let i = 0; i < particlesCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 1;   
-      originalPosArray[i] = posArray[i]; // Store original positions
-    }
-    
-    
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    
-    const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.02,
-      color: 0x3b82f6, // Blue color
-    });
-    
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
+      // Create new particles geometry
+      const particlesGeometry = new THREE.BufferGeometry();
+      const posArray = new Float32Array(particlesCount * 3);
+      const originalPosArray = originalPosArrayRef.current;
 
+      for (let i = 0; i < particlesCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 1; // Random positions
+        originalPosArray[i] = posArray[i];
+      }
+
+      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+      // Create particles material
+      const particlesMaterial = new THREE.PointsMaterial({
+        size: 0.02,
+        color: 0x3b82f6, // Blue color
+      });
+
+      // Create particles mesh
+      const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+
+      // Add particles to the scene
+      scene.add(particlesMesh);
+
+      // Store references
+      particlesGeometryRef.current = particlesGeometry;
+      particlesMeshRef.current = particlesMesh;
+    };
+
+    createParticles();
+    
     // Position camera back
     camera.position.z = 3;
     
@@ -54,8 +78,9 @@ function Background({ isExpanded, setIsExpanded}) {
     window.addEventListener('scroll', handleScroll);
 
     const moveParticlesAwayFromCenter = (forceDir, influenceRadius) => {   
+      if (!particlesGeometryRef.current || !particlesMeshRef.current) return;
       // Retrieve positions of particles
-      const positions = particlesMesh.geometry.attributes.position.array;
+      const positions = particlesMeshRef.current.geometry.attributes.position.array;
 
       // Iterate through each particle position
       for (let i = 0; i < positions.length; i += 3) {
@@ -89,7 +114,7 @@ function Background({ isExpanded, setIsExpanded}) {
         }
       }
               
-      particlesMesh.geometry.attributes.position.needsUpdate = true;
+      particlesMeshRef.current.geometry.attributes.position.needsUpdate = true;
     }
 
     const pointer = new THREE.Vector2();
@@ -101,6 +126,8 @@ function Background({ isExpanded, setIsExpanded}) {
 
     let disableMouseParticleMovement = false;
     const moveParticlesWithMouse = (forceDir, influenceRadius) => {
+      if (!particlesGeometryRef.current || !particlesMeshRef.current) return;
+
       if (disableMouseParticleMovement) return;
       // Set the raycaster from the camera and mouse position
       raycaster.setFromCamera(pointer, camera);
@@ -110,10 +137,10 @@ function Background({ isExpanded, setIsExpanded}) {
 
       // Conver the mouse world coordinates to local coordinates of the particle mesh
       mouseLocalPos.copy(mouseWorldPos);
-      particlesMesh.worldToLocal(mouseLocalPos);
+      particlesMeshRef.current.worldToLocal(mouseLocalPos);
 
       // Retrieve positions of particles
-      const positions = particlesMesh.geometry.attributes.position.array;
+      const positions = particlesMeshRef.current.geometry.attributes.position.array;
 
       // Iterate through each particle position
       for (let i = 0; i < positions.length; i += 3) {
@@ -150,7 +177,7 @@ function Background({ isExpanded, setIsExpanded}) {
         }
       }
               
-      particlesMesh.geometry.attributes.position.needsUpdate = true;
+      particlesMeshRef.current.geometry.attributes.position.needsUpdate = true;
     }
 
     let implosionStartTime = null;
@@ -187,13 +214,14 @@ function Background({ isExpanded, setIsExpanded}) {
     let downDir = 1;
     let upDir = 0.5;
     window.addEventListener('mousemove', (event) => {
+      if (!particlesGeometryRef.current || !particlesMeshRef.current) return;
       if (isMouseDown) {
         onMouseMove(event, downDir);
       } else {
         onMouseMove(event, upDir);
       }
       
-      const color = particlesMesh.material.color;
+      const color = particlesMeshRef.current.material.color;
 
       // Lerp between current and next colors
       const currentColor = presetColors[currentColorIndex];
@@ -213,7 +241,6 @@ function Background({ isExpanded, setIsExpanded}) {
 
     let isMouseDown = false;
     let intervalId = null;
-    const expandFactor = 10;
 
     window.addEventListener('mousedown', (event) => {
       isMouseDown = true;
@@ -235,15 +262,6 @@ function Background({ isExpanded, setIsExpanded}) {
         implosionStartTime = Date.now();
         // return;
       }
-      
-      // if (!isExpanded) {
-      //   // Big bang explosion
-      //   for (let i = 0; i < particlesCount * 3; i++) {
-      //     originalPosArray[i] = originalPosArray[i] * expandFactor;
-      //   }
-      //   isExpanded = true;
-      //   upDir = -0.5;
-      // }
 
       clearInterval(intervalId);
     })
@@ -254,14 +272,19 @@ function Background({ isExpanded, setIsExpanded}) {
 
     const animate = () => {
       requestAnimationFrame(animate);
+
+      if (!particlesGeometryRef.current || !particlesMeshRef.current) {
+        renderer.render(scene, camera);
+        return;
+      }
       
       // Base rotations
       if (isExpanded) {
-        particlesMesh.rotation.x += 0.001;
-        particlesMesh.rotation.y += 0.001;
-        particlesMesh.rotation.z += 0.001;
+        particlesMeshRef.current.rotation.x += 0.001;
+        particlesMeshRef.current.rotation.y += 0.001;
+        particlesMeshRef.current.rotation.z += 0.001;
       } else {
-        particlesMesh.rotation.z += 0.001;
+        particlesMeshRef.current.rotation.z += 0.001;
       }
 
       
@@ -269,7 +292,9 @@ function Background({ isExpanded, setIsExpanded}) {
       const scrollFactor = window.scrollY * 0.0005;
       
       // Modify particle positions based on scroll
-      const positions = particlesMesh.geometry.attributes.position.array;
+      const positions = particlesMeshRef.current.geometry.attributes.position.array;
+
+      const originalPosArray = originalPosArrayRef.current;
       
       for (let i = 0; i < positions.length; i += 3) {
         // Create wave effect based on scroll position
@@ -295,16 +320,16 @@ function Background({ isExpanded, setIsExpanded}) {
         if (implosionStartTime !== null) {
           disableMouseParticleMovement = true;
           const elapsedTime = Date.now() - implosionStartTime;
-          // Implosion animation should last 4 seconds
-          if (elapsedTime < 4000) {
+          // Implosion animation should last 3 seconds
+          if (elapsedTime < 3000) {
             // Animate implosion
             moveParticlesAwayFromCenter(gravity, 3);
-            gravity = Math.max(gravity - 0.005, -10);
+            gravity = Math.max(gravity - 0.002, -10);
           } 
           else {
             // Big bang explosion
             for (let i = 0; i < particlesCount * 3; i++) {
-              originalPosArray[i] = originalPosArray[i] * expandFactor;
+              originalPosArray[i] = originalPosArray[i] * particleMeshRadius;
             }
             isExpanded = true;
             setIsExpanded(true);
@@ -315,13 +340,13 @@ function Background({ isExpanded, setIsExpanded}) {
         }
       }
         
-      particlesMesh.geometry.attributes.position.needsUpdate = true;
+      particlesMeshRef.current.geometry.attributes.position.needsUpdate = true;
       
       // Camera movement based on scroll
       camera.position.y = -scrollFactor * 0.5;
       
       // Additional rotation based on scroll
-      particlesMesh.rotation.y = scrollFactor * 0.5;
+      particlesMeshRef.current.rotation.y = scrollFactor * 0.5;
       
       renderer.render(scene, camera);
     };
@@ -349,6 +374,48 @@ function Background({ isExpanded, setIsExpanded}) {
       renderer.dispose();
     };
   }, []);
+
+  // Update particles when particlesCount changes
+  useEffect(() => {
+    if (!particlesGeometryRef.current || !particlesMeshRef.current) return;
+
+    // Recreate particles
+    const posArray = new Float32Array(particlesCount * 3);
+    
+    const newOriginalPosArray = new Float32Array(particlesCount * 3);
+
+    for (let i = 0; i < particlesCount * 3; i++) {
+      posArray[i] = (Math.random() - 0.5); // Random positions
+      newOriginalPosArray[i] = posArray[i] * (isExpanded ? particleMeshRadius : 1);
+    }
+
+    originalPosArrayRef.current = newOriginalPosArray;
+
+    particlesGeometryRef.current.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    particlesGeometryRef.current.attributes.position.needsUpdate = true;
+  }, [particlesCount]);
+
+  
+  useEffect(() => {
+    if (!particlesGeometryRef.current || !particlesMeshRef.current) return;
+    
+    const newOriginalPosArray = new Float32Array(particlesCount * 3);
+
+    // Factor is the new particle radius divided by the previous particle radius
+    // Except if the previous radius is 0, in which case set it to 1
+    // If not expanded yet, set the factor to 1
+    const factor = isExpanded ? ((particleMeshRadius / prevRadiusRef.current) || 1) : 1;
+
+    for (let i = 0; i < particlesCount * 3; i++) {
+      newOriginalPosArray[i] = originalPosArrayRef.current[i] * factor;
+    }
+
+    prevRadiusRef.current = particleMeshRadius;
+
+    originalPosArrayRef.current = newOriginalPosArray;
+
+    particlesGeometryRef.current.attributes.position.needsUpdate = true;
+  }, [particleMeshRadius]);
 
   return (
     <div 
