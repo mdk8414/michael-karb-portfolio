@@ -45,6 +45,10 @@ code {
   transition: background 0.3s;
 }
 
+.slider:hover {
+  background: #9999dd;
+}
+
 .slider::-webkit-slider-thumb {
   appearance: none;
   width: 15px;

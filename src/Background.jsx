@@ -4,8 +4,6 @@ import * as THREE from 'three';
 
 function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRadius }) {
   const mountRef = useRef(null);
-  const [scrollY, setScrollY] = useState(0);
-  // const [prevRadius, setPrevRadius] = useState(particleMeshRadius);
 
   const prevRadiusRef = useRef(particleMeshRadius);
 
@@ -22,7 +20,6 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
 
   const originalPosArrayRef = useRef(new Float32Array(particlesCount * 3));
 
-  // const particleMeshRadius = 10;
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -70,12 +67,6 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
     // Position camera back
     camera.position.z = 3;
     
-    // Scroll handler
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
 
     const moveParticlesAwayFromCenter = (forceDir, influenceRadius) => {   
       if (!particlesGeometryRef.current || !particlesMeshRef.current) return;
@@ -268,7 +259,7 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
 
 
 
-    let gravity = -0.01;
+    let gravity = 1;
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -320,11 +311,11 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
         if (implosionStartTime !== null) {
           disableMouseParticleMovement = true;
           const elapsedTime = Date.now() - implosionStartTime;
-          // Implosion animation should last 3 seconds
-          if (elapsedTime < 3000) {
+          // Implosion animation should last 4 seconds
+          if (elapsedTime < 5000) {
             // Animate implosion
             moveParticlesAwayFromCenter(gravity, 3);
-            gravity = Math.max(gravity - 0.002, -10);
+            gravity = Math.max(gravity - 0.003, -10);
           } 
           else {
             // Big bang explosion

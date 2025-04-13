@@ -49,243 +49,268 @@ function App() {
   return (
     <div onClick={handleFirstClick} className="relative">
       <Background isExpanded={isExpanded} setIsExpanded={setIsExpanded} particlesCount={particlesCount} particleMeshRadius={particleMeshRadius} />  
-      <div className={`fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4 ${isExpanded ? 'hidden' : ''}`}>
-        <TypewriterHeader />
-      </div>
-      
-      
-    <div className={`flex flex-col min-h-screen bg-gray-900 text-white`}>
-      <div className={`z-10 ${isExpanded ? '' : 'hidden'}`}>
-      {/* Navigation */}
-      <nav className={`fixed w-full bg-gray-900/90 z-50 shadow-md slide-in`}>
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex justify-between items-center py-4">
-            <div className="text-xl font-bold">Michael Karb</div>
-            {time}
-            
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button 
-                onClick={toggleMenu}
-                className="text-white focus:outline-none"
-              >
-                {menuOpen ? 'Close' : 'Menu'}
-              </button>
-            </div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-8">
-              <button onClick={() => scrollToSection('home')} className={`transition ${activeSection === 'home' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Home</button>
-              <button onClick={() => scrollToSection('about')} className={`transition ${activeSection === 'about' ? 'text-blue-400' : 'hover:text-blue-300'}`}>About</button>
-              <button onClick={() => scrollToSection('projects')} className={`transition ${activeSection === 'projects' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Projects</button>
-              <button onClick={() => scrollToSection('skills')} className={`transition ${activeSection === 'skills' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Skills</button>
-              <button onClick={() => scrollToSection('contact')} className={`transition ${activeSection === 'contact' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Contact</button>
-            </div>
-          </div>
-          
-          {/* Mobile Navigation */}
-          {menuOpen && (
-            <div className="md:hidden bg-gray-800 py-2">
-              <div className="flex flex-col space-y-3 px-4 pb-3">
-                <button onClick={() => scrollToSection('home')} className={`text-left ${activeSection === 'home' ? 'text-blue-400' : ''}`}>Home</button>
-                <button onClick={() => scrollToSection('about')} className={`text-left ${activeSection === 'about' ? 'text-blue-400' : ''}`}>About</button>
-                <button onClick={() => scrollToSection('projects')} className={`text-left ${activeSection === 'projects' ? 'text-blue-400' : ''}`}>Projects</button>
-                <button onClick={() => scrollToSection('skills')} className={`text-left ${activeSection === 'skills' ? 'text-blue-400' : ''}`}>Skills</button>
-                <button onClick={() => scrollToSection('contact')} className={`text-left ${activeSection === 'contact' ? 'text-blue-400' : ''}`}>Contact</button>
-              </div>
-            </div>
-          )}
-          <div className="slider-wrapper">
-            <div>
-              <Slider text={"Particles Count"} min={"0"} max={"100000"} value={particlesCount} setValue={setParticlesCount}/>
-            </div>  
-            <div>
-              <Slider text={"Radius"} min={1} max={50} value={particleMeshRadius} setValue={setParticleMeshRadius}/>
-            </div>  
-          </div>
+      {
+        !isExpanded && (
+        <div className={`fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4`}>
+          <TypewriterHeader texts={[ "Click To Enter.", 
+                    "I know the particles \nlook cool.", 
+                    "I spent a lot of \ntime trying to make\nthem perfect.",
+                    "I'm glad you \nlike them.",
+                    "I hope you \nlike the website.",
+                    "I hope you \nlike my work.",
+                    // "I hope you \nlike me.",
+                    "You can click now.",
+                    "Kinda weird \nyou still \nhaven't clicked.",
+                    "....." ]}/>
         </div>
-      </nav>
+        )
+      }
 
-      {/* Hero Section with Three.js Background */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative zoom-in">
-        {/* <Background /> */}
-        <div className="text-center z-10 px-4">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">Michael Karb</h1>
-          {/* <h2 className="text-2xl md:text-3xl text-blue-400 mb-6 animate-fadeIn">Software Developer</h2> */}
-          {/* <TypewriterHeader /> */}
-          {/* Replace the static h2 with the rotating block */}
-          <div className="flex justify-center mb-6">
-            {/* <RotatingTextBlock 
-              titles={[
-                'Software Developer', 
-                'Web Designer', 
-                'Problem Solver', 
-                'Code Enthusiast',
-                'Overwatch Grandmaster Support',
-                'Erotic Anime Watcher',
-                'Giant Penis',
-                'Enthusiasm',
-                'Fuck you Justin',
-              ]} 
-            /> */}
-          </div>
-    
-          <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-2 ">Made this website so AI doesn't take my job.</p>
-          <p className="text-lg md:text-xl max-w-xl mx-auto mb-2">(AI made this website)</p>
-          <p className="text-xs md:text-xs max-w-sm mx-auto mb-8">(Just kidding)</p>
-          <button 
-            onClick={() => scrollToSection('contact')}
-            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-md transition">
-            Touch me
-          </button>
+      {
+        isClicked && 
+        !isExpanded && (
+        <div className={`fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4`}>
+          <TypewriterHeader texts={[ "Entering..."]} minSpeed={25} maxSpeed={25} lastTextSpeed={25} pauseTime={2000} repeat={false} />
         </div>
-      </section>
+        )
+      }
 
-      {/* About Section */}
-      <section id="about" className="py-20 px-4 relative zoom-in">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">About me</h2>
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="w-64 h-64 rounded-full bg-gray-700 flex-shrink-0">
-              {/* Profile image placeholder */}
-              <div className="w-full h-full rounded-full flex items-center justify-center text-center">
-                <span>Mirror Selfie</span>
-              </div>
-            </div>
-            <div>
-              <p className="text-lg mb-4">
-                {/* Hello! I'm a passionate software developer with experience in web development, 
-                cloud architecture, and machine learning. I enjoy solving complex problems and building 
-                intuitive applications that make a difference. */}
-                idk man
-              </p>
-              <p className="text-lg mb-4">
-                {/* With over X years of experience in the industry, I've worked on various projects 
-                ranging from small business websites to enterprise-level applications. My goal is 
-                to create software that is not only functional but also user-friendly and maintainable. */}
-                unless you have a job for me
-              </p>
-              <div className="flex gap-4 mt-6">
-                <button className="px-4 py-2 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded transition">
-                  {/* Download Resume */}
-                  Resume
-                </button>
+    {  
+      isExpanded && (
+      <div className={`flex flex-col min-h-screen bg-gray-900 text-white`}>
+        <div className={`z-10 ${isExpanded ? '' : 'hidden'}`}>
+        {/* Navigation */}
+        <nav className={`fixed w-full bg-gray-900/90 z-50 shadow-md slide-in`}>
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="flex justify-between items-center py-4">
+              <div className="text-xl font-bold">Michael Karb</div>
+              {time}
+              
+              {/* Mobile menu button */}
+              <div className="md:hidden">
                 <button 
-                  onClick={() => scrollToSection('projects')}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded transition"
+                  onClick={toggleMenu}
+                  className="text-white focus:outline-none"
                 >
-                  See My Work
+                  {menuOpen ? 'Close' : 'Menu'}
                 </button>
               </div>
+              
+              {/* Desktop Navigation */}
+              <div className="hidden md:flex space-x-8">
+                <button onClick={() => scrollToSection('home')} className={`transition ${activeSection === 'home' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Home</button>
+                <button onClick={() => scrollToSection('about')} className={`transition ${activeSection === 'about' ? 'text-blue-400' : 'hover:text-blue-300'}`}>About</button>
+                <button onClick={() => scrollToSection('projects')} className={`transition ${activeSection === 'projects' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Projects</button>
+                <button onClick={() => scrollToSection('skills')} className={`transition ${activeSection === 'skills' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Skills</button>
+                <button onClick={() => scrollToSection('contact')} className={`transition ${activeSection === 'contact' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Contact</button>
+              </div>
+            </div>
+            
+            {/* Mobile Navigation */}
+            {menuOpen && (
+              <div className="md:hidden bg-gray-800 py-2">
+                <div className="flex flex-col space-y-3 px-4 pb-3">
+                  <button onClick={() => scrollToSection('home')} className={`text-left ${activeSection === 'home' ? 'text-blue-400' : ''}`}>Home</button>
+                  <button onClick={() => scrollToSection('about')} className={`text-left ${activeSection === 'about' ? 'text-blue-400' : ''}`}>About</button>
+                  <button onClick={() => scrollToSection('projects')} className={`text-left ${activeSection === 'projects' ? 'text-blue-400' : ''}`}>Projects</button>
+                  <button onClick={() => scrollToSection('skills')} className={`text-left ${activeSection === 'skills' ? 'text-blue-400' : ''}`}>Skills</button>
+                  <button onClick={() => scrollToSection('contact')} className={`text-left ${activeSection === 'contact' ? 'text-blue-400' : ''}`}>Contact</button>
+                </div>
+              </div>
+            )}
+            <div className="slider-wrapper">
+              <div>
+                <Slider text={"Particles Count"} min={0} max={100000} value={particlesCount} setValue={setParticlesCount}/>
+              </div>  
+              <div>
+                <Slider text={"Radius"} min={1} max={50} value={particleMeshRadius} setValue={setParticleMeshRadius}/>
+              </div>  
             </div>
           </div>
-        </div>
-      </section>
+        </nav>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 bg-gray-800/50 zoom-in">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center relative z-10">My Projects</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-            {projects.map((project, index) => (
-              <ProjectCard key={index} project={project} />
-            ))}
+        {/* Hero Section with Three.js Background */}
+        <section id="home" className="min-h-screen flex items-center justify-center relative zoom-in">
+          {/* <Background /> */}
+          <div className="text-center z-10 px-4">
+            <h1 className="text-5xl md:text-6xl font-bold mb-4">Michael Karb</h1>
+            {/* <h2 className="text-2xl md:text-3xl text-blue-400 mb-6 animate-fadeIn">Software Developer</h2> */}
+            {/* <TypewriterHeader /> */}
+            {/* Replace the static h2 with the rotating block */}
+            <div className="flex justify-center mb-6">
+              {/* <RotatingTextBlock 
+                titles={[
+                  'Software Developer', 
+                  'Web Designer', 
+                  'Problem Solver', 
+                  'Code Enthusiast',
+                  'Overwatch Grandmaster Support',
+                  'Erotic Anime Watcher',
+                  'Giant Penis',
+                  'Enthusiasm',
+                  'Fuck you Justin',
+                ]} 
+              /> */}
+            </div>
+      
+            <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-2 ">Made this website so AI doesn't take my job.</p>
+            <p className="text-lg md:text-xl max-w-xl mx-auto mb-2">(AI made this website)</p>
+            <p className="text-xs md:text-xs max-w-sm mx-auto mb-8">(Just kidding)</p>
+            <button 
+              onClick={() => scrollToSection('about')}
+              className="px-6 py-3 bg-blue-700/60 hover:bg-blue-600/80 rounded-md transition">
+              Learn More
+            </button>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-20 px-4 relative z-10 zoom-in">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">Skills & Technologies</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {skills.map((skill, index) => (
-              <SkillBadge key={index} skill={skill} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 bg-gray-800/50 zoom-in">
-        <div className="max-w-4xl mx-auto relative z-10">
-          <h2 className="text-3xl font-bold mb-12 text-center">Get In Touch</h2>
-          <div className="flex flex-col md:flex-row gap-8">
-            <div className="md:w-1/2">
-              <h3 className="text-xl font-bold mb-4">Contact Information</h3>
-              <div className="space-y-4">
-                <div>
-                  <p className="font-semibold">Email:</p>
-                  <p>mdk804@gmail.com</p>
+        {/* About Section */}
+        <section id="about" className="py-20 px-4 relative zoom-in">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold mb-12 text-center">About me</h2>
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="w-64 h-64 rounded-full bg-gray-700 flex-shrink-0">
+                {/* Profile image placeholder */}
+                <div className="w-full h-full rounded-full flex items-center justify-center text-center">
+                  <span>Mirror Selfie</span>
                 </div>
-                <div>
-                  <p className="font-semibold">Location:</p>
-                  <p>Cary, NC, USA</p>
-                </div>
+              </div>
+              <div>
+                <p className="text-lg mb-4">
+                  {/* Hello! I'm a passionate software developer with experience in web development, 
+                  cloud architecture, and machine learning. I enjoy solving complex problems and building 
+                  intuitive applications that make a difference. */}
+                  idk man
+                </p>
+                <p className="text-lg mb-4">
+                  {/* With over X years of experience in the industry, I've worked on various projects 
+                  ranging from small business websites to enterprise-level applications. My goal is 
+                  to create software that is not only functional but also user-friendly and maintainable. */}
+                  unless you have a job for me
+                </p>
                 <div className="flex gap-4 mt-6">
-                  <a href="#" className="text-blue-400 hover:text-blue-300">
-                    GitHub
-                  </a>
-                  <a href="#" className="text-blue-400 hover:text-blue-300">
-                    LinkedIn
-                  </a>
-                  <a href="#" className="text-blue-400 hover:text-blue-300">
-                    Twitter
-                  </a>
+                  <button className="px-4 py-2 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded transition">
+                    {/* Download Resume */}
+                    Resume
+                  </button>
+                  <button 
+                    onClick={() => scrollToSection('projects')}
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded transition"
+                  >
+                    See My Work
+                  </button>
                 </div>
               </div>
             </div>
-            <div className="md:w-1/2">
-              <h3 className="text-xl font-bold mb-4">Send Me a Message</h3>
-              <form className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block mb-1">Name</label>
-                  <input 
-                    type="text" 
-                    id="name" 
-                    className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block mb-1">Email</label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block mb-1">Message</label>
-                  <textarea 
-                    id="message" 
-                    rows="4"
-                    className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <button 
-                  type="submit" 
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded transition w-full"
-                >
-                  Send Message
-                </button>
-              </form>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section id="projects" className="py-20 px-4 bg-gray-800/50 zoom-in">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold mb-12 text-center relative z-10">My Projects</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+              {projects.map((project, index) => (
+                <ProjectCard key={index} project={project} />
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-4 bg-gray-900 border-t border-gray-800 zoom-in">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-blue-400 transition">GitHub</a>
-            <a href="#" className="hover:text-blue-400 transition">LinkedIn</a>
-            <a href="#" className="hover:text-blue-400 transition">Twitter</a>
+        {/* Skills Section */}
+        <section id="skills" className="py-20 px-4 relative z-10 zoom-in">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold mb-12 text-center">Skills & Technologies</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {skills.map((skill, index) => (
+                <SkillBadge key={index} skill={skill} />
+              ))}
+            </div>
           </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="py-20 px-4 bg-gray-800/50 zoom-in">
+          <div className="max-w-4xl mx-auto relative z-10">
+            <h2 className="text-3xl font-bold mb-12 text-center">Get In Touch</h2>
+            <div className="flex flex-col md:flex-row gap-8">
+              <div className="md:w-1/2">
+                <h3 className="text-xl font-bold mb-4">Contact Information</h3>
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-semibold">Email:</p>
+                    <p>mdk804@gmail.com</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Location:</p>
+                    <p>Cary, NC, USA</p>
+                  </div>
+                  <div className="flex gap-4 mt-6">
+                    <a href="#" className="text-blue-400 hover:text-blue-300">
+                      GitHub
+                    </a>
+                    <a href="#" className="text-blue-400 hover:text-blue-300">
+                      LinkedIn
+                    </a>
+                    <a href="#" className="text-blue-400 hover:text-blue-300">
+                      Twitter
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="md:w-1/2">
+                <h3 className="text-xl font-bold mb-4">Send Me a Message</h3>
+                <form className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block mb-1">Name</label>
+                    <input 
+                      type="text" 
+                      id="name" 
+                      className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block mb-1">Email</label>
+                    <input 
+                      type="email" 
+                      id="email" 
+                      className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="block mb-1">Message</label>
+                    <textarea 
+                      id="message" 
+                      rows="4"
+                      className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <button 
+                    type="submit" 
+                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded transition w-full"
+                  >
+                    Send Message
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="py-8 px-4 bg-gray-900 border-t border-gray-800 zoom-in">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div className="flex gap-6 mt-4 md:mt-0">
+              <a href="#" className="hover:text-blue-400 transition">GitHub</a>
+              <a href="#" className="hover:text-blue-400 transition">LinkedIn</a>
+              <a href="#" className="hover:text-blue-400 transition">Twitter</a>
+            </div>
+          </div>
+        </footer>
         </div>
-      </footer>
       </div>
-    </div>
+      )
+    }
     </div>
   );
 }
@@ -293,12 +318,16 @@ function App() {
 // Project Card Component
 function ProjectCard({ project }) {
   return (
-    <div className="bg-gray-700 rounded-lg overflow-hidden shadow-lg transition hover:shadow-xl hover:translate-y-1">
-      <div className="h-48 bg-gray-600 relative">
+    <div className="bg-gray-700/80 rounded-lg overflow-hidden shadow-lg transition hover:shadow-xl hover:translate-y-1">
+      <div className="h-64 bg-gray-600 relative bg-cover bg-center" style={{ backgroundImage: `url(${project.image})` }}>
         {/* Project image placeholder */}
-        <div className="w-full h-full flex items-center justify-center text-center p-4">
-          <span>{project.title} Screenshot</span>
-        </div>
+        {/* <div className="w-full h-full flex items-center justify-center text-center p-4">
+          <img
+            src={project.image}
+            alt={`${project.title} Screenshot`} 
+            className="object-top object-cover w-full h-full"
+          />
+        </div> */}
       </div>
       <div className="p-6">
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
@@ -311,22 +340,22 @@ function ProjectCard({ project }) {
           ))}
         </div>
         <div className="flex space-x-4">
-          <a 
+          {project.demo && <a 
             href={project.demo} 
             className="text-blue-400 hover:text-blue-300 transition"
             target="_blank"
             rel="noreferrer"
           >
             Live Demo
-          </a>
-          <a 
+          </a>}
+          {project.repo && <a 
             href={project.repo} 
             className="text-blue-400 hover:text-blue-300 transition"
             target="_blank"
             rel="noreferrer"
           >
             GitHub
-          </a>
+          </a>}
         </div>
       </div>
     </div>
@@ -347,11 +376,12 @@ function SkillBadge({ skill }) {
 // Sample Data
 const projects = [
   {
-    title: "Project One",
-    description: "A full-stack web application with user authentication and real-time data processing.",
-    technologies: ["React", "Node.js", "MongoDB", "Socket.io"],
-    demo: "#",
-    repo: "#"
+    title: "AONest Mobile App",
+    description: "Emotional intelligence mobile app for AONest using React / Native (Volunteered 2024-2025)",
+    technologies: ["React", "React Native", "Expo" ],
+    image: "AONest/AONest-1.png",
+    // demo: "#",
+    repo: "https://github.com/mdk8414/AO-mobile-app"
   },
   {
     title: "Project Two",
@@ -408,23 +438,15 @@ const skills = [
 
 export default App;
 
-const TypewriterHeader = () => {
-  const texts = [ "Click To Enter.", 
-                  "I know the particles \nlook cool.", 
-                  "I spent a lot of \ntime trying to make\nthem perfect.",
-                  "I'm glad you \nlike them.",
-                  "I hope you \nlike the website.",
-                  "I hope you \nlike my work.",
-                  // "I hope you \nlike me.",
-                  "You can click now.",
-                  "Kinda weird \nyou still \nhaven't clicked.",
-                  "....." ];
+const TypewriterHeader = ({ texts, minSpeed=100, maxSpeed=25, lastTextSpeed=500, pauseTime=2000, repeat=true }) => {
+
   const [textIndex, setTextIndex] = useState(0);
   const [fullText, setFullText] = useState(texts[0]);
   const [displayText, setDisplayText] = useState("");
   const [index, setIndex] = useState(0);
   const [forward, setForward] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+  const [isStopped, setIsStopped] = useState(false);
   
   useEffect(() => {
     if (isPaused) return;
@@ -437,7 +459,7 @@ const TypewriterHeader = () => {
 
         if (index === fullText.length - 1) {
           setIsPaused(true);
-          setTimeout(() => setIsPaused(false), 2000);
+          setTimeout(() => setIsPaused(false), pauseTime);
           setForward(false);
         }
   
@@ -448,17 +470,18 @@ const TypewriterHeader = () => {
 
         if (index === 1) {
           setIsPaused(true);
-          setTimeout(() => setIsPaused(false), 2000);
+          setTimeout(() => setIsPaused(false), pauseTime);
           setTextIndex((prevIndex) => {
             const newIndex = (prevIndex + 1) % texts.length;
             setFullText(texts[newIndex]);
             return newIndex;
           })
-          setForward(true);
+          if (repeat) setForward(true);
+          else setIsStopped(true);
         }
       }
          
-    }, ((textIndex === texts.length - 1) ? 500 : (forward ? 100 : 25)));
+    }, ((textIndex === texts.length - 1) ? lastTextSpeed : (forward ? minSpeed : maxSpeed)));
 
     
       
@@ -468,13 +491,17 @@ const TypewriterHeader = () => {
   
   return (
     <h2 className="text-2xl md:text-3xl text-center text-white-400 mb-6 font-mono">
-      {displayText.split('\n').map((line, index, array) => (
-      <React.Fragment key={index}>
-        {line}
-        {index < array.length - 1 ? <br /> : null}
-      </React.Fragment>
-    ))}
-      <span className="animate-blink">|</span>
+      {!isStopped ? (
+        <>
+          {displayText.split('\n').map((line, index, array) => (
+          <React.Fragment key={index}>
+            {line}
+            {index < array.length - 1 ? <br /> : null}
+          </React.Fragment>
+          ))}
+          <span className="animate-blink">|</span>
+        </>
+      ) : null}
     </h2>
   );
 };
