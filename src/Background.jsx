@@ -20,6 +20,10 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
 
   const originalPosArrayRef = useRef(new Float32Array(particlesCount * 3));
 
+  const clock = new THREE.Clock();
+
+  let deltaTime = clock.getDelta();
+
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -162,8 +166,8 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
 
 
           // Apply force to particle position
-          positions[i] += forceDir * direction.x * force;
-          positions[i + 1] += forceDir * direction.y * force;
+          positions[i] += 100 * deltaTime * forceDir * direction.x * force;
+          positions[i + 1] += 100 * deltaTime * forceDir * direction.y * force;
           // positions[i + 2] += direction.z * force;
         }
       }
@@ -220,7 +224,7 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
       color.lerpColors(currentColor, nextColor, lerpFactor);
 
       // Increment lerp factor
-      lerpFactor += 0.003; // Adjust speed of transition
+      lerpFactor += 100 * deltaTime * 0.003; // Adjust speed of transition
       if (lerpFactor >= 1) {
         lerpFactor = 0;
         currentColorIndex = nextColorIndex;
@@ -268,14 +272,16 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
         renderer.render(scene, camera);
         return;
       }
+
+      deltaTime = clock.getDelta();
       
       // Base rotations
       if (isExpanded) {
-        particlesMeshRef.current.rotation.x += 0.001;
-        particlesMeshRef.current.rotation.y += 0.001;
-        particlesMeshRef.current.rotation.z += 0.001;
+        particlesMeshRef.current.rotation.x += 0.1 * deltaTime;
+        particlesMeshRef.current.rotation.y += 0.1 * deltaTime;
+        particlesMeshRef.current.rotation.z += 0.1 * deltaTime;
       } else {
-        particlesMeshRef.current.rotation.z += 0.001;
+        particlesMeshRef.current.rotation.z += 0.1 * deltaTime;
       }
 
       
@@ -315,7 +321,7 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
           if (elapsedTime < 5000) {
             // Animate implosion
             moveParticlesAwayFromCenter(gravity, 3);
-            gravity = Math.max(gravity - 0.003, -10);
+            gravity = Math.max(gravity - 0.4*deltaTime, -10);
           } 
           else {
             // Big bang explosion
