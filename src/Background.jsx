@@ -15,6 +15,8 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
 
+  // scene.background = new THREE.Color( 0x000000 );
+
   const particlesGeometryRef = useRef(null);
   const particlesMeshRef = useRef(null);
 
@@ -90,13 +92,13 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
         // Calculate the distance from the mouse to this particle
         const dx = particlePosition.x;
         const dy = particlePosition.y;
-        const dz = particlePosition.z;
+        const dz = 0.5*particlePosition.z;
         const distanceToCenter = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
         // If the particle is within the influence radius of the mouse
         if (distanceToCenter < influenceRadius) {
           // Get (normalized) direction vector of particle to mouse
-          const direction = new THREE.Vector2(dx / distanceToCenter || 0, dy / distanceToCenter || 0);
+          const direction = new THREE.Vector3(dx / distanceToCenter || 0, dy / distanceToCenter || 0, dz / distanceToCenter || 0);
 
           // Calculate the force strength based on distance to mouse
           const force = 0.2 * (1 - distanceToCenter / influenceRadius);
@@ -105,7 +107,7 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
           // Apply force to particle position
           positions[i] += forceDir * direction.x * force;
           positions[i + 1] += forceDir * direction.y * force;
-          // positions[i + 2] += direction.z * force;
+          positions[i + 2] += forceDir * direction.z * force;
         }
       }
               
@@ -117,10 +119,9 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
     const mousePlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
     const mouseWorldPos = new THREE.Vector3();
     const mouseLocalPos = new THREE.Vector3();
-    let count = 0;
 
     let disableMouseParticleMovement = false;
-    const moveParticlesWithMouse = (forceDir, influenceRadius) => {
+    const moveParticlesWithMouse = (forceDir, influenceRadius, enableDepth=true) => {
       if (!particlesGeometryRef.current || !particlesMeshRef.current) return;
 
       if (disableMouseParticleMovement) return;
@@ -151,6 +152,7 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
         const dx = particlePosition.x  - mouseLocalPos.x;
         const dy = particlePosition.y - mouseLocalPos.y;
         const dz = particlePosition.z - mouseLocalPos.z;
+        // const dz = enableDepth ? particlePosition.z - mouseLocalPos.z : 0;
         const distanceToMouse = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
         // Establish radius of influence
@@ -159,16 +161,16 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
         // If the particle is within the influence radius of the mouse
         if (distanceToMouse < influenceRadius) {
           // Get (normalized) direction vector of particle to mouse
-          const direction = new THREE.Vector2(dx / distanceToMouse || 0, dy / distanceToMouse || 0);
+          const direction = new THREE.Vector3(dx / distanceToMouse || 0, dy / distanceToMouse || 0, dz / distanceToMouse || 0);
 
           // Calculate the force strength based on distance to mouse
-          const force = 0.2 * (1 - distanceToMouse / influenceRadius);
+          const force = 0.1 * (1 - distanceToMouse / influenceRadius);
 
 
           // Apply force to particle position
           positions[i] += 100 * deltaTime * forceDir * direction.x * force;
           positions[i + 1] += 100 * deltaTime * forceDir * direction.y * force;
-          // positions[i + 2] += direction.z * force;
+          positions[i + 2] += enableDepth ? 100 * deltaTime * forceDir * direction.z * force : 0;
         }
       }
               
@@ -204,18 +206,9 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
 
     let currentColorIndex = 0;
     let nextColorIndex = 1;
-    let lerpFactor = 0; // Interpolation factor (0 to 1)
+    let lerpFactor = 0;
 
-    let downDir = 1;
-    let upDir = 0.5;
-    window.addEventListener('mousemove', (event) => {
-      if (!particlesGeometryRef.current || !particlesMeshRef.current) return;
-      if (isMouseDown) {
-        onMouseMove(event, downDir);
-      } else {
-        onMouseMove(event, upDir);
-      }
-      
+    function lerpParticleColors(lerpSpeed) {
       const color = particlesMeshRef.current.material.color;
 
       // Lerp between current and next colors
@@ -224,12 +217,25 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
       color.lerpColors(currentColor, nextColor, lerpFactor);
 
       // Increment lerp factor
-      lerpFactor += 100 * deltaTime * 0.003; // Adjust speed of transition
+      lerpFactor += 100 * deltaTime * lerpSpeed; // Adjust speed of transition
       if (lerpFactor >= 1) {
         lerpFactor = 0;
         currentColorIndex = nextColorIndex;
         nextColorIndex = (nextColorIndex + 1) % presetColors.length; // Loop through colors
       }
+    }
+
+    let downDir = 1;
+    let upDir = 0;
+    window.addEventListener('mousemove', (event) => {
+      if (!particlesGeometryRef.current || !particlesMeshRef.current) return;
+      if (isMouseDown) {
+        onMouseMove(event, downDir);
+      } else {
+        onMouseMove(event, upDir);
+      }
+      
+      lerpParticleColors(0.003);
 
 
     });
@@ -311,17 +317,18 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
       if (!isExpanded) {
         if (!isMouseDown && implosionStartTime === null) {
           moveParticlesAwayFromCenter(0.5, 1.5);
-          moveParticlesWithMouse(0.5, 1.5);
+          moveParticlesWithMouse(1, 1.5, false);
         } 
 
         if (implosionStartTime !== null) {
           disableMouseParticleMovement = true;
           const elapsedTime = Date.now() - implosionStartTime;
           // Implosion animation should last 4 seconds
-          if (elapsedTime < 5000) {
+          if (elapsedTime < 4000) {
             // Animate implosion
             moveParticlesAwayFromCenter(gravity, 3);
-            gravity = Math.max(gravity - 0.4*deltaTime, -10);
+            gravity = Math.max(gravity - 0.5*deltaTime, -0.2);
+            lerpParticleColors(0.02);
           } 
           else {
             // Big bang explosion
@@ -330,7 +337,8 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
             }
             isExpanded = true;
             setIsExpanded(true);
-            upDir = -0.5;
+            // Set mouse force and direction
+            upDir = -0.4;
             implosionStartTime = null;
             disableMouseParticleMovement = false;
           }

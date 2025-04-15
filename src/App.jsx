@@ -50,6 +50,7 @@ function App() {
     <div onClick={handleFirstClick} className="relative">
       <Background isExpanded={isExpanded} setIsExpanded={setIsExpanded} particlesCount={particlesCount} particleMeshRadius={particleMeshRadius} />  
       {
+        !isClicked &&
         !isExpanded && (
         <div className={`fixed inset-0 bg-gray-900 text-white flex items-center justify-center z-4`}>
           <TypewriterHeader texts={[ "Click To Enter.", 
@@ -158,7 +159,7 @@ function App() {
             <p className="text-xs md:text-xs max-w-sm mx-auto mb-8">(Just kidding)</p>
             <button 
               onClick={() => scrollToSection('about')}
-              className="px-6 py-3 bg-blue-700/60 hover:bg-blue-600/80 rounded-md transition">
+              className="px-6 py-3 bg-blue-700/80 hover:bg-blue-600/90 rounded-md transition">
               Learn More
             </button>
           </div>
