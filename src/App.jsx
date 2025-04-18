@@ -7,7 +7,7 @@ import RotatingTextBlock from './RotatingTextBlock';
 function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
-  const [time, setTime] = useState(new Date().toLocaleString("en-US", { dateStyle: "full", timeStyle: undefined }));
+  const timeRef = useRef(null);
   const [isClicked, setIsClicked] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [particlesCount, setParticlesCount] = useState(10000);
@@ -36,15 +36,19 @@ function App() {
     setMenuOpen(false);
   };
 
-  // useEffect(() => {
-  //   // Set up an interval to update the time every second
-  //   const intervalId = setInterval(() => {
-  //     setTime(new Date().toLocaleString("en-US", { dateStyle: "full", timeStyle: "medium" }));
-  //   }, 500);
-    
-  //   // Clean up the interval when component unmounts
-  //   return () => clearInterval(intervalId);
-  // }, []);
+  useEffect(() => {
+    // Update the time every second
+    const intervalId = setInterval(() => {
+      if (timeRef.current) {
+        timeRef.current.textContent = new Date().toLocaleString("en-US", {
+          dateStyle: "full",
+          timeStyle: "medium",
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div onClick={handleFirstClick} className="relative">
@@ -82,10 +86,10 @@ function App() {
         <div className={`z-10 ${isExpanded ? '' : 'hidden'}`}>
         {/* Navigation */}
         <nav className={`fixed w-full bg-gray-900/90 z-50 shadow-md slide-in`}>
-          <div className="max-w-6xl mx-auto px-4">
+          <div className="max-w-5xl mx-auto px-4">
             <div className="flex justify-between items-center py-4">
+              <div className="absolute left-0 pl-10" ref={timeRef}></div>
               <div className="text-xl font-bold">Michael Karb</div>
-              {time}
               
               {/* Mobile menu button */}
               <div className="md:hidden">
@@ -482,7 +486,7 @@ const TypewriterHeader = ({ texts, minSpeed=100, maxSpeed=25, lastTextSpeed=500,
         }
       }
          
-    }, ((textIndex === texts.length - 1) ? lastTextSpeed : (forward ? minSpeed : maxSpeed)));
+    }, ((textIndex === texts.length - 1) ? (forward ? lastTextSpeed : maxSpeed) : (forward ? minSpeed : maxSpeed)));
 
     
       
