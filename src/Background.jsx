@@ -327,7 +327,7 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
           if (elapsedTime < 4000) {
             // Animate implosion
             moveParticlesAwayFromCenter(gravity, 3);
-            gravity = Math.max(gravity - 0.5*deltaTime, -0.2);
+            gravity = Math.max(gravity - 0.4*deltaTime, -0.2);
             lerpParticleColors(0.02);
           } 
           else {
