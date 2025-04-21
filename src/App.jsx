@@ -1,7 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Background from './Background';
 import RotatingTextBlock from './RotatingTextBlock';
-
+import { FaJenkins, FaGitAlt , FaDocker, FaJava, FaPython, FaDatabase, FaReact } from 'react-icons/fa';
+import { IoLogoJavascript } from "react-icons/io5";
+import { SiKubernetes, SiPostgresql, SiCplusplus, SiTailwindcss, SiMongodb, SiAmazons3, SiSpringboot, SiApachekafka } from "react-icons/si";
+import { FaGear } from "react-icons/fa6";
+import { DiRedis } from "react-icons/di";
 
 // Main App Component
 function App() {
@@ -139,26 +143,9 @@ function App() {
           {/* <Background /> */}
           <div className="text-center z-10 px-4">
             <h1 className="text-5xl md:text-6xl font-bold mb-4">Michael Karb</h1>
-            {/* <h2 className="text-2xl md:text-3xl text-blue-400 mb-6 animate-fadeIn">Software Developer</h2> */}
-            {/* <TypewriterHeader /> */}
-            {/* Replace the static h2 with the rotating block */}
-            <div className="flex justify-center mb-6">
-              {/* <RotatingTextBlock 
-                titles={[
-                  'Software Developer', 
-                  'Web Designer', 
-                  'Problem Solver', 
-                  'Code Enthusiast',
-                  'Overwatch Grandmaster Support',
-                  'Erotic Anime Watcher',
-                  'Giant Penis',
-                  'Enthusiasm',
-                  'Fuck you Justin',
-                ]} 
-              /> */}
-            </div>
+            <div className="flex justify-center mb-6"></div>
       
-            <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-2 ">Made this website so AI doesn't take my job.</p>
+            <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-2 ">I made this website so AI doesn't take my job.</p>
             <p className="text-lg md:text-xl max-w-xl mx-auto mb-2">(AI made this website)</p>
             <p className="text-xs md:text-xs max-w-sm mx-auto mb-8">(Just kidding)</p>
             <button 
@@ -212,7 +199,7 @@ function App() {
 
         {/* Projects Section */}
         <section id="projects" className="py-20 px-4 bg-gray-800/50 zoom-in">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold mb-12 text-center relative z-10">My Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
               {projects.map((project, index) => (
@@ -251,14 +238,21 @@ function App() {
                     <p>Cary, NC, USA</p>
                   </div>
                   <div className="flex gap-4 mt-6">
-                    <a href="#" className="text-blue-400 hover:text-blue-300">
+                    <a 
+                      href="https://github.com/mdk8414" 
+                      className="text-blue-400 hover:text-blue-300"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       GitHub
                     </a>
-                    <a href="#" className="text-blue-400 hover:text-blue-300">
+                    <a 
+                      href="https://www.linkedin.com/in/michael-karb-a27631162/" 
+                      className="text-blue-400 hover:text-blue-300"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       LinkedIn
-                    </a>
-                    <a href="#" className="text-blue-400 hover:text-blue-300">
-                      Twitter
                     </a>
                   </div>
                 </div>
@@ -306,9 +300,22 @@ function App() {
         <footer className="py-8 px-4 bg-gray-900 border-t border-gray-800 zoom-in">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
             <div className="flex gap-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-blue-400 transition">GitHub</a>
-              <a href="#" className="hover:text-blue-400 transition">LinkedIn</a>
-              <a href="#" className="hover:text-blue-400 transition">Twitter</a>
+              <a 
+                href="https://github.com/mdk8414" 
+                className="hover:text-blue-400 transition"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/michael-karb-a27631162/" 
+                className="hover:text-blue-400 transition"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
             </div>
           </div>
         </footer>
@@ -370,7 +377,7 @@ function ProjectCard({ project }) {
 // Skill Badge Component
 function SkillBadge({ skill }) {
   return (
-    <div className="bg-gray-700 rounded-lg p-4 text-center shadow transition hover:bg-gray-600">
+    <div className="bg-gray-700 rounded-lg p-4 text-center shadow transition hover:bg-gray-600 flex flex-col items-center justify-center">
       <div className="text-blue-400 text-lg mb-2">{skill.icon}</div>
       <div>{skill.name}</div>
     </div>
@@ -427,18 +434,37 @@ const projects = [
 ];
 
 const skills = [
-  { name: "JavaScript", icon: "JS" },
-  { name: "React", icon: "⚛️" },
-  { name: "Node.js", icon: "🟢" },
-  { name: "Python", icon: "🐍" },
-  { name: "TypeScript", icon: "TS" },
-  { name: "MongoDB", icon: "🍃" },
-  { name: "PostgreSQL", icon: "🐘" },
-  { name: "Docker", icon: "🐳" },
-  { name: "AWS", icon: "☁️" },
-  { name: "Git", icon: "🔄" },
-  { name: "HTML5", icon: "📄" },
-  { name: "CSS3", icon: "🎨" }
+  // Languages
+  { name: "Java", icon: <FaJava size={28} /> },
+  { name: "Python", icon: <FaPython size={28} color='ddddaa' /> },
+  { name: "C / C++", icon: <SiCplusplus size={28} color='darkblue' /> },
+  { name: "JavaScript", icon: <IoLogoJavascript color='yellow' size={28} /> },
+  
+  // Frameworks
+  { name: "Spring Boot", icon: <SiSpringboot size={28} color='lightgreen' /> },
+  { name: "React", icon: <FaReact size={28} color='00aaff' /> },
+  { name: "Tailwind CSS", icon: <SiTailwindcss size={28} color='teal' /> },
+  { name: "REST", icon: <FaGear size={28} color='grey' /> },
+  
+  // Data Management
+  { name: "PostgreSQL", icon: <SiPostgresql size={28} /> },
+  { name: "MongoDB", icon: <SiMongodb size={28} color='green' /> },
+  { name: "Amazon S3", icon: <SiAmazons3 size={28} color='darkorange' /> },
+  { name: "Redis", icon: <DiRedis size={36} color='darkred' /> },
+
+  { name: "Apache Kafka", icon: <SiApachekafka size={28} color='black' /> },  
+  { name: "Kubernetes", icon: <SiKubernetes size={28} color="1188ff"/> },
+  // { name: "SQL", icon: <FaDatabase size={28} /> },
+  { name: "Docker", icon: <FaDocker size={28} /> },
+  { name: "Git", icon: <FaGitAlt size={28} color='dd4400' /> },
+
+  // { name: "Jenkins", icon: <FaJenkins size={28} color='darkblue' /> },  
+  // { name: "Kubernetes", icon: <SiKubernetes size={28} color="1188ff"/> },
+  // { name: "Docker", icon: <FaDocker size={28} /> },
+  // { name: "Git", icon: <FaGitAlt size={28} color='dd4400' /> },
+  
+  // { name: "HTML5", icon: "📄" },
+  // { name: "CSS3", icon: "🎨" },
 ];
 
 
