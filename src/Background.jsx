@@ -373,7 +373,6 @@ function Background({ isExpanded, setIsExpanded, particlesCount, particleMeshRad
         mountRef.current.removeChild(renderer.domElement);
       }
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', onMouseMove);
 
       renderer.dispose();
