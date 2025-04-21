@@ -86,9 +86,9 @@ function App() {
         <div className={`z-10 ${isExpanded ? '' : 'hidden'}`}>
         {/* Navigation */}
         <nav className={`fixed w-full bg-gray-900/90 z-50 shadow-md slide-in`}>
-          <div className="max-w-5xl mx-auto px-4">
+          <div className="max-w-7xl mx-auto px-4">
             <div className="flex justify-between items-center py-4">
-              <div className="absolute left-0 pl-10 hidden md:block" ref={timeRef}></div>
+              <div className="pl-10 hidden md:block" ref={timeRef}></div>
               <div className="text-xl font-bold">Michael Karb</div>
               
               {/* Mobile menu button */}
@@ -419,7 +419,7 @@ const projects = [
   {
     title: "This Website",
     description: "Personal portfolio website for yours truly, using Three JS for 3D graphics rendering.",
-    technologies: ["React", "Three JS", "Vite"],
+    technologies: ["React", "Tailwind CSS", "HTML", "Three JS", "Vite"],
     image: "Portfolio/portfolio-website.png",
     demo: ".",
     repo: "https://github.com/mdk8414/michael-karb-portfolio"
