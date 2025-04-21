@@ -365,14 +365,14 @@ const projects = [
   },
   {
     title: "Raytracer",
-    description: "Object-oriented full-feature 3D Ray Tracer with path tracing, bounding volume hierarchy, and various lighting and camera effects",
+    description: "Object-oriented full-feature 3D Ray Tracer with path tracing, bounding volume hierarchy, and various lighting and camera effects.",
     technologies: ["C", "C++"],
     image: "Raytracer/spiral.png",
     repo: "https://github.com/mdk8414/raytracer"
   },
   {
     title: "Scene Builder",
-    description: "Graphics engine built with OpenGL that allows you to create and modify objects, lighting, colors, textures, and more through an interactive interface.",
+    description: "Graphics engine built with OpenGL that allows the player to create and modify objects, lighting, colors, textures, and more through an interactive interface.",
     technologies: ["C++", "OpenGL", "GLSL"],
     image: "SceneBuilder/scene-builder.png",
     demo: "SceneBuilder/scene-builder.mp4",
@@ -387,7 +387,7 @@ const projects = [
   },
   {
     title: "Dancing Lights",
-    description: "Audio responsive lights using an individually addressable LED strip and Arduino programming",
+    description: "Audio-reactive lights using an individually addressable LED strip. Built a custom breadboard circuit and programmed an Arduino to synchronize lighting effects with sound input.",
     technologies: ["Arduino", "C", "C++"],
     image: "DancingLights/audio-circuit.jpeg",
     repo: "https://github.com/mdk8414/audio-responsive-arduino"
