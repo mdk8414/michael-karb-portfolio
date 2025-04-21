@@ -177,7 +177,7 @@ function App() {
               <div className="w-64 h-64 rounded-full bg-gray-700 flex-shrink-0">
                 {/* Profile image placeholder */}
                 <div className="w-full h-full rounded-full flex items-center justify-center text-center">
-                  <span>Mirror Selfie</span>
+                  <img src="headshot.jpeg" className="rounded-full object-cover border-2 border-gray-500"/>
                 </div>
               </div>
               <div>
@@ -194,13 +194,13 @@ function App() {
                   unless you have a job for me
                 </p>
                 <div className="flex gap-4 mt-6">
-                  <button className="px-4 py-2 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded transition">
+                  <a href="/Resume.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 border border-blue-500 text-blue-500 bg-gray-900/80 hover:bg-gray-700 hover:text-blue-500 rounded transition">
                     {/* Download Resume */}
                     Resume
-                  </button>
+                  </a>
                   <button 
                     onClick={() => scrollToSection('projects')}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded transition"
+                    className="px-4 py-2 bg-blue-700/80 hover:bg-blue-600/90 rounded transition"
                   >
                     See My Work
                   </button>
@@ -323,7 +323,7 @@ function App() {
 // Project Card Component
 function ProjectCard({ project }) {
   return (
-    <div className="bg-gray-700/80 rounded-lg overflow-hidden shadow-lg transition hover:shadow-xl hover:translate-y-1">
+    <div className="bg-gray-700/80 hover:bg-gray-600/80 rounded-lg overflow-hidden shadow-lg transition hover:shadow-xl hover:translate-y-1">
       <div className="h-64 bg-gray-600 relative bg-cover bg-center" style={{ backgroundImage: `url(${project.image})` }}>
         {/* Project image placeholder */}
         {/* <div className="w-full h-full flex items-center justify-center text-center p-4">
@@ -349,9 +349,9 @@ function ProjectCard({ project }) {
             href={project.demo} 
             className="text-blue-400 hover:text-blue-300 transition"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
-            Live Demo
+            Demo
           </a>}
           {project.repo && <a 
             href={project.repo} 
@@ -389,38 +389,41 @@ const projects = [
     repo: "https://github.com/mdk8414/AO-mobile-app"
   },
   {
-    title: "Project Two",
-    description: "An AI-powered recommendation engine that analyzes user preferences.",
-    technologies: ["Python", "TensorFlow", "Flask", "AWS"],
-    demo: "#",
-    repo: "#"
+    title: "Raytracer",
+    description: "Object-oriented full-feature 3D Ray Tracer with path tracing, bounding volume hierarchy, and various lighting and camera effects (2023)",
+    technologies: ["C", "C++"],
+    image: "Raytracer/spiral.png",
+    // demo: "#",
+    repo: "https://github.com/mdk8414/raytracer"
   },
   {
-    title: "Project Three",
+    title: "Scene Builder",
     description: "Mobile application for tracking fitness activities and nutrition.",
-    technologies: ["React Native", "Firebase", "Redux", "Chart.js"],
-    demo: "#",
-    repo: "#"
+    technologies: ["C++", "OpenGL", "GLSL"],
+    image: "SceneBuilder/scene-builder.png",
+    demo: "SceneBuilder/scene-builder.mp4",
+    repo: "https://github.com/mdk8414/scene-builder"
   },
   {
-    title: "Project Four",
+    title: "Image to Ascii",
     description: "E-commerce platform with integrated payment processing and inventory management.",
-    technologies: ["Next.js", "Stripe", "PostgreSQL", "Docker"],
-    demo: "#",
-    repo: "#"
+    technologies: ["Python"],
+    image: "Image2Ascii/mona-lisa-ascii.png",
+    // demo: "#",
+    repo: "https://github.com/mdk8414/image-to-ascii"
   },
   {
     title: "Project Five",
     description: "Browser extension that enhances productivity and blocks distractions.",
     technologies: ["JavaScript", "Chrome API", "CSS", "LocalStorage"],
-    demo: "#",
+    // demo: "#",
     repo: "#"
   },
   {
     title: "Project Six",
     description: "Interactive data visualization dashboard for business analytics.",
     technologies: ["D3.js", "Vue.js", "Express", "GraphQL"],
-    demo: "#",
+    // demo: "#",
     repo: "#"
   }
 ];
