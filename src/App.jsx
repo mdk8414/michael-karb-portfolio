@@ -408,7 +408,7 @@ const projects = [
     title: "Image to Ascii",
     description: "E-commerce platform with integrated payment processing and inventory management.",
     technologies: ["Python"],
-    image: "Image2Ascii/mona-lisa-ascii.png",
+    image: "Image2Ascii/fallout-ascii.png",
     // demo: "#",
     repo: "https://github.com/mdk8414/image-to-ascii"
   },
