@@ -381,22 +381,22 @@ function SkillBadge({ skill }) {
 // Sample Data
 const projects = [
   {
-    title: "AONest Mobile App",
-    description: "Emotional intelligence mobile app for AONest using React / Native (Volunteered 2024-2025)",
+    title: "AONest Mobile App (Volunteer)",
+    description: "Mobile app that helps users track and understand their daily emotions, while improving their emotional intelligence with free educational resources.",
     technologies: ["React", "React Native", "Expo" ],
     image: "AONest/AONest-1.png",
     repo: "https://github.com/mdk8414/AO-mobile-app"
   },
   {
     title: "Raytracer",
-    description: "Object-oriented full-feature 3D Ray Tracer with path tracing, bounding volume hierarchy, and various lighting and camera effects (2023)",
+    description: "Object-oriented full-feature 3D Ray Tracer with path tracing, bounding volume hierarchy, and various lighting and camera effects",
     technologies: ["C", "C++"],
     image: "Raytracer/spiral.png",
     repo: "https://github.com/mdk8414/raytracer"
   },
   {
     title: "Scene Builder",
-    description: "Mobile application for tracking fitness activities and nutrition.",
+    description: "Graphics engine built with OpenGL that allows you to create and modify objects, lighting, colors, textures, and more through an interactive interface.",
     technologies: ["C++", "OpenGL", "GLSL"],
     image: "SceneBuilder/scene-builder.png",
     demo: "SceneBuilder/scene-builder.mp4",
@@ -410,18 +410,19 @@ const projects = [
     repo: "https://github.com/mdk8414/image-to-ascii"
   },
   {
-    title: "Project Five",
-    description: "Browser extension that enhances productivity and blocks distractions.",
-    technologies: ["JavaScript", "Chrome API", "CSS", "LocalStorage"],
-    // demo: "#",
-    repo: "#"
+    title: "Dancing Lights",
+    description: "Audio responsive lights using an individually addressable LED strip and Arduino programming",
+    technologies: ["Arduino", "C", "C++"],
+    image: "DancingLights/audio-circuit.jpeg",
+    repo: "https://github.com/mdk8414/audio-responsive-arduino"
   },
   {
-    title: "Project Six",
-    description: "Interactive data visualization dashboard for business analytics.",
-    technologies: ["D3.js", "Vue.js", "Express", "GraphQL"],
-    // demo: "#",
-    repo: "#"
+    title: "This Website",
+    description: "Personal portfolio website for yours truly, using Three JS for 3D graphics rendering.",
+    technologies: ["React", "Three JS", "Vite"],
+    image: "Portfolio/portfolio-website.png",
+    demo: ".",
+    repo: "https://github.com/mdk8414/michael-karb-portfolio"
   }
 ];
 
