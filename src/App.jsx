@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Background from './Background';
-import RotatingTextBlock from './RotatingTextBlock';
 import { FaJenkins, FaGitAlt , FaDocker, FaJava, FaPython, FaDatabase, FaReact } from 'react-icons/fa';
 import { IoLogoJavascript } from "react-icons/io5";
 import { SiKubernetes, SiPostgresql, SiCplusplus, SiTailwindcss, SiMongodb, SiAmazons3, SiSpringboot, SiApachekafka } from "react-icons/si";
 import { FaGear } from "react-icons/fa6";
 import { DiRedis } from "react-icons/di";
+import emailjs from '@emailjs/browser';
 
 // Main App Component
 function App() {
@@ -259,38 +259,7 @@ function App() {
               </div>
               <div className="md:w-1/2">
                 <h3 className="text-xl font-bold mb-4">Send Me a Message</h3>
-                <form className="space-y-4">
-                  <div>
-                    <label htmlFor="name" className="block mb-1">Name</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block mb-1">Email</label>
-                    <input 
-                      type="email" 
-                      id="email" 
-                      className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="block mb-1">Message</label>
-                    <textarea 
-                      id="message" 
-                      rows="4"
-                      className="w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <button 
-                    type="submit" 
-                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded transition w-full"
-                  >
-                    Send Message
-                  </button>
-                </form>
+                <ContactForm />
               </div>
             </div>
           </div>
@@ -594,5 +563,84 @@ const Slider = ({text, min, max, value, setValue}) => {
       />
       <p>{text}: {value}</p>
     </div>
+  );
+};
+
+
+const ContactForm = () => {
+  const form = useRef();
+  const [disabled, setDisabled] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    setDisabled(true);
+
+    emailjs.sendForm(
+      'service_i69frd6', 
+      'template_im6n2ce', 
+      form.current, 
+      { publicKey: 'z1TvHremRkAPh48tN' }
+    ).then((result) => {
+        console.log("Message sent successfully: ", result.text);
+        setStatusMessage("✅ Message sent successfully! Thank you for reaching out.")
+    }, (error) => {
+        console.log("Message failed to send: ", error.text);
+        setStatusMessage('❌ Failed to send message. Try again.');
+        setDisabled(false);
+    });
+
+    // e.target.reset(); // clear form
+  };
+
+  return (
+    <form ref={form} onSubmit={sendEmail} className="space-y-4">
+      <div>
+        <label htmlFor="name" className="block mb-1">Name</label>
+        <input 
+          type="text" 
+          id="name" 
+          name='name'
+          disabled={disabled}
+          required
+          autocomplete="one-time-code" // Using this to disable autocomplete since Chrome autofill messes with CSS styling
+          className={`w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${disabled && 'text-gray-400'}`}
+        />
+      </div>
+      <div>
+        <label htmlFor="email" className="block mb-1">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email"
+          disabled={disabled}
+          required
+          autocomplete="one-time-code"
+          className={`w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${disabled && 'text-gray-400'}`}
+        />
+      </div>
+      <div>
+        <label htmlFor="message" className="block mb-1">Message</label>
+        <textarea 
+          id="message" 
+          name="message"
+          maxLength={1000}
+          rows="4"
+          disabled={disabled}
+          required
+          autocomplete="one-time-code"
+          className={`w-full px-4 py-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${disabled && 'text-gray-400'}`}
+        />
+      </div>
+      <button 
+        type="submit" 
+        disabled={disabled}
+        className={`px-6 py-3 rounded transition w-full ${disabled ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
+      >
+        {disabled ? 'Message Sent' : 'Send Message'}
+      </button>
+      {statusMessage && <p>{statusMessage}</p>}
+    </form>
   );
 };
