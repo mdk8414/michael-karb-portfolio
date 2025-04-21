@@ -88,7 +88,7 @@ function App() {
         <nav className={`fixed w-full bg-gray-900/90 z-50 shadow-md slide-in`}>
           <div className="max-w-5xl mx-auto px-4">
             <div className="flex justify-between items-center py-4">
-              <div className="absolute left-0 pl-10" ref={timeRef}></div>
+              <div className="absolute left-0 pl-10 hidden md:block" ref={timeRef}></div>
               <div className="text-xl font-bold">Michael Karb</div>
               
               {/* Mobile menu button */}
@@ -385,7 +385,6 @@ const projects = [
     description: "Emotional intelligence mobile app for AONest using React / Native (Volunteered 2024-2025)",
     technologies: ["React", "React Native", "Expo" ],
     image: "AONest/AONest-1.png",
-    // demo: "#",
     repo: "https://github.com/mdk8414/AO-mobile-app"
   },
   {
@@ -393,7 +392,6 @@ const projects = [
     description: "Object-oriented full-feature 3D Ray Tracer with path tracing, bounding volume hierarchy, and various lighting and camera effects (2023)",
     technologies: ["C", "C++"],
     image: "Raytracer/spiral.png",
-    // demo: "#",
     repo: "https://github.com/mdk8414/raytracer"
   },
   {
@@ -406,10 +404,9 @@ const projects = [
   },
   {
     title: "Image to Ascii",
-    description: "E-commerce platform with integrated payment processing and inventory management.",
+    description: "Python utility that uses PILLOW to convert images into ASCII text art.",
     technologies: ["Python"],
     image: "Image2Ascii/fallout-ascii.png",
-    // demo: "#",
     repo: "https://github.com/mdk8414/image-to-ascii"
   },
   {
