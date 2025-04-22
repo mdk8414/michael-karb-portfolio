@@ -185,7 +185,7 @@ function App() {
               </div>
               <div>
                 <p className="text-lg mb-4">
-                  I'm a software engineer at IBM with nearly 4 years of full-time experience and a strong focus on building scalable, 
+                  I'm a software engineer at IBM with a strong focus on building scalable, 
                   enterprise-grade systems using event-driven architecture, cloud microservices, and intelligent automation. 
                   
                   <br/>
