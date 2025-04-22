@@ -168,13 +168,19 @@ function App() {
             <div className="flex flex-col md:flex-row gap-8 ">
               <div className="w-64 h-64 rounded-full flex-shrink-0">
                 {/* Profile image placeholder */}
-                <img src="italy.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800 object-bottom"/>
+                {/* <img src="italy.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800 object-bottom"/> */}
                 {/* <img src="japan.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
                 {/* <img src="skydive.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
-                <picture class="w-64 h-64 rounded-full object-cover overflow-hidden block border-8 border-gray-800">
-                  <img src="japan.jpg" className="rounded-full object-cover scale-100"/>
+                <picture class="my-6 w-64 h-64 rounded-full overflow-hidden block border-8 object-bottom border-gray-800">
+                  <img src="italy.jpg" className="w-full h-full object-bottom object-cover rounded-full object-bottom hover:scale-125 ease-in duration-150"/>
                 </picture>
-                <img src="ecuador.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/>
+                <picture class="my-6 w-64 h-64 rounded-full overflow-hidden block border-8 border-gray-800">
+                  <img src="japan.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-150"/>
+                </picture>
+                <picture class="my-6 w-64 h-64 rounded-full overflow-hidden block border-8 border-gray-800">
+                  <img src="ecuador.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-150"/>
+                </picture>
+                {/* <img src="ecuador.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
                 
                 {/* <div className="w-64 h-64 rounded-full border-2 border-gray-500 object-bottom">
                   <img src="italy.jpg" className="z-1 w-64 h-64 rounded-full object-cover"/>
