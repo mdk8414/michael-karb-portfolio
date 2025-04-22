@@ -165,20 +165,23 @@ function App() {
         <section id="about" className="py-20 px-4 relative zoom-in">
           <div className="py-10 px-10 max-w-5xl mx-auto bg-gray-700/90 rounded-3xl">
             <h2 className="text-3xl font-bold mb-8 text-center">About me</h2>
-            <div className="flex flex-col md:flex-row items-center gap-8 ">
-              <div className="w-64 h-64 rounded-full bg-gray-700 flex-shrink-0">
+            <div className="flex flex-col md:flex-row gap-8 ">
+              <div className="w-64 h-64 rounded-full flex-shrink-0">
                 {/* Profile image placeholder */}
-                {/* <img src="italy.jpg" className="w-64 h-64 rounded-full object-cover border-2 border-gray-500 scale-100 object-bottom"/> */}
-
-                {/* <picture class="w-64 h-64 rounded-full object-cover overflow-hidden block border-2 border-gray-500">
-                  <img src="italy.jpg" className="w-64 h-64 rounded-full object-cover scale-125 object-bottom transform -translate-x-4"/>
-                </picture> */}
+                <img src="italy.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800 object-bottom"/>
+                {/* <img src="japan.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
+                {/* <img src="skydive.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
+                <picture class="w-64 h-64 rounded-full object-cover overflow-hidden block border-8 border-gray-800">
+                  <img src="japan.jpg" className="rounded-full object-cover scale-100"/>
+                </picture>
+                <img src="ecuador.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/>
+                
                 {/* <div className="w-64 h-64 rounded-full border-2 border-gray-500 object-bottom">
                   <img src="italy.jpg" className="z-1 w-64 h-64 rounded-full object-cover"/>
                 </div> */}
-                <div className="w-full h-full rounded-full flex items-center justify-center text-center">
-                  <img src="headshot.jpeg" className="rounded-full object-cover border-8 border-gray-900"/>
-                </div>
+                {/* <div className="w-full h-full rounded-full flex items-center justify-center text-center">
+                  <img src="headshot.jpeg" className="my-3 rounded-full object-cover border-8 border-gray-900"/>
+                </div> */}
               </div>
               <div>
                 <p className="text-lg mb-4">
@@ -207,7 +210,7 @@ function App() {
                   <br/>
                   <br/>
 
-                  Outside of software and engineering, I enjoy drawing, playing volleyball, watching TV, gaming, and learning about history. 
+                  Outside of software and engineering, I enjoy traveling, playing volleyball, drawing, watching TV, gaming, and learning about history. 
                   I also love watching football, and would pay an outrageous amount of cash to watch the Bears play in the Superbowl.
                 </p>
                 <div className="flex gap-4 mt-6">
