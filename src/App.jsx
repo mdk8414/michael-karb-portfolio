@@ -192,18 +192,18 @@ function App() {
                   <br/>
 
                   Over the past few years, I've led the design and implementation of high-performance services that support critical business functions, 
-                  process billions of dollars in transactional data, and empower dozens of engineering teams across the enterprise.
+                  processing billions of dollars in transactional data, and empowering dozens of engineering teams across the enterprise.
                   
                   My expertise lies in designing and implementing low-latency, high-volume backend applications with Java and Python, 
-                  while leveraging industry standard tools like Apache Kafka for event-driven processing and Kubernetes for cloud deployments.  
-                  My contributions have led to significant performance gains, widespread internal adoption, as well as a pending patent.
+                  while leveraging industry standard tools like Apache Kafka for event-driven processing, Docker and Kubernetes for cloud deployments, and Jenkins for CI/CD pipelines.  
+                  My contributions have led to significant performance gains, widespread internal adoption, and pending patents.
                   I'm passionate about solving important technical challenges — whether it's optimizing distributed systems, automating manual tasks,
                   or architecting simple solutions for complex problems.
                   
                   <br/>
                   <br/>
                   
-                  Beyond work, I graduated with a Master's in Computer Science from University of Illinois Urbana-Champaign in 2024 and enjoy volunteering on meaningful side projects, 
+                  Beyond work, I graduated with a Master's in Computer Science from University of Illinois Urbana-Champaign and enjoy volunteering on meaningful side projects, 
                   such as building a mobile app for mental health education in Native American communities, or developing multilingual chat assistants to translate online conversations. 
                   I often leverage programming as a creative outlet, exploring interactive 3D projects using Three.js, developing indie games in Godot, or writing graphics engines with OpenGL.
                 
@@ -211,7 +211,7 @@ function App() {
                   <br/>
 
                   Outside of software and engineering, I enjoy traveling, playing volleyball, drawing, watching TV, gaming, and learning about history. 
-                  I also love watching football, and would pay an outrageous amount of cash to watch the Bears play in the Superbowl.
+                  I also love watching football, and would pay an outrageous amount of money to watch the Bears play in the Superbowl.
                 </p>
                 <div className="flex gap-4 mt-6">
                   <a href="Resume.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 border border-blue-500 text-blue-500 bg-gray-900/80 hover:bg-gray-700 hover:text-blue-500 rounded transition">
