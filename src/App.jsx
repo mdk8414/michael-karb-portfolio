@@ -139,49 +139,79 @@ function App() {
         </nav>
 
         {/* Hero Section with Three.js Background */}
+        <FadeInSection>
         <section id="home" className="min-h-screen flex items-center justify-center relative zoom-in">
           {/* <Background /> */}
-          <div className="text-center z-10 px-4">
+          <div className="text-center z-10 rounded-full ">
             <h1 className="text-5xl md:text-6xl font-bold mb-4">Michael Karb</h1>
             <div className="flex justify-center mb-6"></div>
       
+            {/* <div className='justify-center items-center bg-gray-700/30 rounded-full px-6 py-8'> */}
             <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-2 ">I made this website so AI doesn't take my job.</p>
             <p className="text-lg md:text-xl max-w-xl mx-auto mb-2">(AI made this website)</p>
-            <p className="text-xs md:text-xs max-w-sm mx-auto mb-8">(Just kidding)</p>
+            <p className="text-xs md:text-xs max-w-sm mx-auto mb-0">(Just kidding)</p>
+            {/* </div> */}
             <button 
               onClick={() => scrollToSection('about')}
-              className="px-6 py-3 bg-blue-700/80 hover:bg-blue-600/90 rounded-md transition">
+              className="px-6 py-3 mt-6 bg-blue-700/80 hover:bg-blue-600/90 rounded-md transition">
               Learn More
             </button>
           </div>
         </section>
+        </FadeInSection>
 
         {/* About Section */}
+        <FadeInSection>
         <section id="about" className="py-20 px-4 relative zoom-in">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-12 text-center">About me</h2>
-            <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="py-10 px-10 max-w-5xl mx-auto bg-gray-700/90 rounded-3xl">
+            <h2 className="text-3xl font-bold mb-8 text-center">About me</h2>
+            <div className="flex flex-col md:flex-row items-center gap-8 ">
               <div className="w-64 h-64 rounded-full bg-gray-700 flex-shrink-0">
                 {/* Profile image placeholder */}
+                {/* <img src="italy.jpg" className="w-64 h-64 rounded-full object-cover border-2 border-gray-500 scale-100 object-bottom"/> */}
+
+                {/* <picture class="w-64 h-64 rounded-full object-cover overflow-hidden block border-2 border-gray-500">
+                  <img src="italy.jpg" className="w-64 h-64 rounded-full object-cover scale-125 object-bottom transform -translate-x-4"/>
+                </picture> */}
+                {/* <div className="w-64 h-64 rounded-full border-2 border-gray-500 object-bottom">
+                  <img src="italy.jpg" className="z-1 w-64 h-64 rounded-full object-cover"/>
+                </div> */}
                 <div className="w-full h-full rounded-full flex items-center justify-center text-center">
-                  <img src="headshot.jpeg" className="rounded-full object-cover border-2 border-gray-500"/>
+                  <img src="headshot.jpeg" className="rounded-full object-cover border-8 border-gray-900"/>
                 </div>
               </div>
               <div>
                 <p className="text-lg mb-4">
-                  {/* Hello! I'm a passionate software developer with experience in web development, 
-                  cloud architecture, and machine learning. I enjoy solving complex problems and building 
-                  intuitive applications that make a difference. */}
-                  idk man
-                </p>
-                <p className="text-lg mb-4">
-                  {/* With over X years of experience in the industry, I've worked on various projects 
-                  ranging from small business websites to enterprise-level applications. My goal is 
-                  to create software that is not only functional but also user-friendly and maintainable. */}
-                  unless you have a job for me
+                  I'm a software engineer at IBM with nearly 4 years of full-time experience and a strong focus on building scalable, 
+                  enterprise-grade systems using event-driven architecture, cloud microservices, and intelligent automation. 
+                  
+                  <br/>
+                  <br/>
+
+                  Over the past few years, I've led the design and implementation of high-performance services that support critical business functions, 
+                  process billions of dollars in transactional data, and empower dozens of engineering teams across the enterprise.
+                  
+                  My expertise lies in designing and implementing low-latency, high-volume backend applications with Java and Python, 
+                  while leveraging industry standard tools like Apache Kafka for event-driven processing and Kubernetes for cloud deployments.  
+                  My contributions have led to significant performance gains, widespread internal adoption, as well as a pending patent.
+                  I'm passionate about solving important technical challenges — whether it's optimizing distributed systems, automating manual tasks,
+                  or architecting simple solutions for complex problems.
+                  
+                  <br/>
+                  <br/>
+                  
+                  Beyond work, I graduated with a Master's in Computer Science from University of Illinois Urbana-Champaign in 2024 and enjoy volunteering on meaningful side projects, 
+                  such as building a mobile app for mental health education in Native American communities, or developing multilingual chat assistants to translate online conversations. 
+                  I often leverage programming as a creative outlet, exploring interactive 3D projects using Three.js, developing indie games in Godot, or writing graphics engines with OpenGL.
+                
+                  <br/>
+                  <br/>
+
+                  Outside of software and engineering, I enjoy drawing, playing volleyball, watching TV, gaming, and learning about history. 
+                  I also love watching football, and would pay an outrageous amount of cash to watch the Bears play in the Superbowl.
                 </p>
                 <div className="flex gap-4 mt-6">
-                  <a href="/Resume.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 border border-blue-500 text-blue-500 bg-gray-900/80 hover:bg-gray-700 hover:text-blue-500 rounded transition">
+                  <a href="Resume.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 border border-blue-500 text-blue-500 bg-gray-900/80 hover:bg-gray-700 hover:text-blue-500 rounded transition">
                     {/* Download Resume */}
                     Resume
                   </a>
@@ -196,8 +226,10 @@ function App() {
             </div>
           </div>
         </section>
+        </FadeInSection>
 
         {/* Projects Section */}
+        <FadeInSection>
         <section id="projects" className="py-20 px-4 bg-gray-800/50 zoom-in">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold mb-12 text-center relative z-10">My Projects</h2>
@@ -208,7 +240,9 @@ function App() {
             </div>
           </div>
         </section>
+        </FadeInSection>
 
+        <FadeInSection threshold={0.85}>
         {/* Skills Section */}
         <section id="skills" className="py-20 px-4 relative z-10 zoom-in">
           <div className="max-w-4xl mx-auto">
@@ -220,7 +254,9 @@ function App() {
             </div>
           </div>
         </section>
+        </FadeInSection>
 
+        <FadeInSection>
         {/* Contact Section */}
         <section id="contact" className="py-20 px-4 bg-gray-800/50 zoom-in">
           <div className="max-w-4xl mx-auto relative z-10">
@@ -264,6 +300,7 @@ function App() {
             </div>
           </div>
         </section>
+        </FadeInSection>
 
         {/* Footer */}
         <footer className="py-8 px-4 bg-gray-900 border-t border-gray-800 zoom-in">
@@ -642,5 +679,48 @@ const ContactForm = () => {
       </button>
       {statusMessage && <p>{statusMessage}</p>}
     </form>
+  );
+};
+
+const FadeInSection = ({ children, threshold = 0.3 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Update state when intersection status changes
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          // Once it's visible, we can stop observing
+          // observer.unobserve(entry.target);
+        } else {
+          setIsVisible(false);
+        }
+      },
+      { threshold }
+    );
+    
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+    
+    // Cleanup observer on component unmount
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [threshold]);
+  
+  // Apply transition classes conditionally based on visibility
+  const fadeClasses = `transition-all duration-[1000ms] ease-in-out transform ${isVisible ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-6"
+}`;
+  
+  return (
+    <div ref={sectionRef} className={fadeClasses}>
+      {children}
+    </div>
   );
 };
