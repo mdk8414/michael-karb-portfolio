@@ -34,9 +34,36 @@ function App() {
     setMenuOpen(!menuOpen);
   };
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId, scrollAlignment = 'start') => {
     setActiveSection(sectionId);
-    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    const section = document.getElementById(sectionId);
+  
+    if (section) {
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      const navBarHeight = document.querySelector('nav')?.offsetHeight || 0; 
+  
+      let scrollPosition;
+      switch (scrollAlignment) {
+        case 'start':
+          scrollPosition = sectionTop;
+          break;
+        case 'center':
+          scrollPosition = sectionTop - (window.innerHeight / 2) + (section.offsetHeight / 2);
+          break;
+        case 'end':
+          scrollPosition = sectionTop - window.innerHeight + section.offsetHeight;
+          break; 
+        default:
+          scrollPosition = sectionTop;
+          break;
+      }
+  
+      window.scrollTo({
+        top: scrollPosition - navBarHeight,
+        behavior: 'smooth',
+      });
+    }
+  
     setMenuOpen(false);
   };
 
@@ -108,7 +135,7 @@ function App() {
               {/* Desktop Navigation */}
               <div className="hidden md:flex space-x-8">
                 <button onClick={() => scrollToSection('home')} className={`transition ${activeSection === 'home' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Home</button>
-                <button onClick={() => scrollToSection('about')} className={`transition ${activeSection === 'about' ? 'text-blue-400' : 'hover:text-blue-300'}`}>About</button>
+                <button onClick={() => scrollToSection('about', 'center')} className={`transition ${activeSection === 'about' ? 'text-blue-400' : 'hover:text-blue-300'}`}>About</button>
                 <button onClick={() => scrollToSection('projects')} className={`transition ${activeSection === 'projects' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Projects</button>
                 <button onClick={() => scrollToSection('skills')} className={`transition ${activeSection === 'skills' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Skills</button>
                 <button onClick={() => scrollToSection('contact')} className={`transition ${activeSection === 'contact' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Contact</button>
@@ -120,8 +147,8 @@ function App() {
               <div className="md:hidden bg-gray-800 py-2">
                 <div className="flex flex-col space-y-3 px-4 pb-3">
                   <button onClick={() => scrollToSection('home')} className={`text-left ${activeSection === 'home' ? 'text-blue-400' : ''}`}>Home</button>
-                  <button onClick={() => scrollToSection('about')} className={`text-left ${activeSection === 'about' ? 'text-blue-400' : ''}`}>About</button>
-                  <button onClick={() => scrollToSection('projects')} className={`text-left ${activeSection === 'projects' ? 'text-blue-400' : ''}`}>Projects</button>
+                  <button onClick={() => scrollToSection('about', 'center')} className={`text-left ${activeSection === 'about' ? 'text-blue-400' : ''}`}>About</button>
+                  <button onClick={() => scrollToSection('projects', 'start')} className={`text-left ${activeSection === 'projects' ? 'text-blue-400' : ''}`}>Projects</button>
                   <button onClick={() => scrollToSection('skills')} className={`text-left ${activeSection === 'skills' ? 'text-blue-400' : ''}`}>Skills</button>
                   <button onClick={() => scrollToSection('contact')} className={`text-left ${activeSection === 'contact' ? 'text-blue-400' : ''}`}>Contact</button>
                 </div>
@@ -140,7 +167,7 @@ function App() {
 
         {/* Hero Section with Three.js Background */}
         <FadeInSection>
-        <section id="home" className="min-h-screen flex items-center justify-center relative zoom-in">
+        <section id="home" className="min-h-screen flex items-center justify-center relative ">
           {/* <Background /> */}
           <div className="text-center z-10 rounded-full ">
             <h1 className="text-5xl md:text-6xl font-bold mb-4">Michael Karb</h1>
@@ -152,7 +179,7 @@ function App() {
             <p className="text-xs md:text-xs max-w-sm mx-auto mb-0">(Just kidding)</p>
             {/* </div> */}
             <button 
-              onClick={() => scrollToSection('about')}
+              onClick={() => scrollToSection('about', 'center')}
               className="px-6 py-3 mt-6 bg-blue-700/80 hover:bg-blue-600/90 rounded-md transition">
               Learn More
             </button>
@@ -162,7 +189,8 @@ function App() {
 
         {/* About Section */}
         <FadeInSection>
-        <section id="about" className="py-20 px-4 relative zoom-in">
+        <section id="about" className="py-20 px-4 relative">
+        
           <div className="py-10 px-10 max-w-5xl mx-auto bg-gray-700/90 rounded-3xl">
             <h2 className="text-3xl font-bold mb-8 text-center">About me</h2>
             <div className="flex flex-col md:flex-row gap-8 ">
@@ -171,13 +199,13 @@ function App() {
                 {/* <img src="italy.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800 object-bottom"/> */}
                 {/* <img src="japan.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
                 {/* <img src="skydive.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
-                <picture class="my-6 w-64 h-64 rounded-full overflow-hidden block border-8 object-bottom border-gray-800">
+                <picture class="md:block my-6 w-64 h-64 rounded-full overflow-hidden block border-8 object-bottom border-gray-800">
                   <img src="italy.jpg" className="w-full h-full object-bottom object-cover rounded-full object-bottom hover:scale-125 ease-in duration-150"/>
                 </picture>
-                <picture class="my-6 w-64 h-64 rounded-full overflow-hidden block border-8 border-gray-800">
+                <picture class="hidden md:block my-6 w-64 h-64 rounded-full overflow-hidden block border-8 border-gray-800">
                   <img src="japan.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-150"/>
                 </picture>
-                <picture class="my-6 w-64 h-64 rounded-full overflow-hidden block border-8 border-gray-800">
+                <picture class="hidden md:block my-6 w-64 h-64 rounded-full overflow-hidden block border-8 border-gray-800">
                   <img src="ecuador.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-150"/>
                 </picture>
                 {/* <img src="ecuador.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
@@ -234,13 +262,16 @@ function App() {
               </div>
             </div>
           </div>
+          
         </section>
         </FadeInSection>
+        
 
         {/* Projects Section */}
+        
         <FadeInSection>
-        <section id="projects" className="py-20 px-4 bg-gray-800/50 zoom-in">
-          <div className="max-w-7xl mx-auto">
+        <section id="projects" className="bg-gray-800/50">
+          <div className="max-w-7xl mx-auto py-20 px-4 ">
             <h2 className="text-3xl font-bold mb-12 text-center relative z-10">My Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
               {projects.map((project, index) => (
@@ -251,9 +282,10 @@ function App() {
         </section>
         </FadeInSection>
 
-        <FadeInSection threshold={0.85}>
+
+        <FadeInSection threshold={0.75}>
         {/* Skills Section */}
-        <section id="skills" className="py-20 px-4 relative z-10 zoom-in">
+        <section id="skills" className="py-20 px-4 relative z-10 ">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-12 text-center">Skills & Technologies</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -267,7 +299,7 @@ function App() {
 
         <FadeInSection>
         {/* Contact Section */}
-        <section id="contact" className="py-20 px-4 bg-gray-800/50 zoom-in">
+        <section id="contact" className="py-20 px-4 bg-gray-800/50 ">
           <div className="max-w-4xl mx-auto relative z-10">
             <h2 className="text-3xl font-bold mb-12 text-center">Get In Touch</h2>
             <div className="flex flex-col md:flex-row gap-8">
@@ -312,7 +344,7 @@ function App() {
         </FadeInSection>
 
         {/* Footer */}
-        <footer className="py-8 px-4 bg-gray-900 border-t border-gray-800 zoom-in">
+        <footer className="py-8 px-4 bg-gray-900 border-t border-gray-800 ">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
             <div className="flex gap-6 mt-4 md:mt-0">
               <a 
@@ -694,7 +726,21 @@ const ContactForm = () => {
 const FadeInSection = ({ children, threshold = 0.3 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const [screenThreshold, setScreenThreshhold] = useState(threshold)
   
+  useEffect(() => {
+    const calculateThreshold = () => {
+      setScreenThreshhold(threshold * window.innerWidth / window.innerHeight);
+    }
+
+    calculateThreshold();
+    window.addEventListener("resize", calculateThreshold);
+
+    return () => {
+      window.removeEventListener("resize", calculateThreshold);
+    }
+  }, threshold)
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
