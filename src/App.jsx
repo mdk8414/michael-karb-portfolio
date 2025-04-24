@@ -135,7 +135,7 @@ function App() {
               {/* Desktop Navigation */}
               <div className="hidden md:flex space-x-8">
                 <button onClick={() => scrollToSection('home')} className={`transition ${activeSection === 'home' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Home</button>
-                <button onClick={() => scrollToSection('about', 'center')} className={`transition ${activeSection === 'about' ? 'text-blue-400' : 'hover:text-blue-300'}`}>About</button>
+                <button onClick={() => scrollToSection('about')} className={`transition ${activeSection === 'about' ? 'text-blue-400' : 'hover:text-blue-300'}`}>About</button>
                 <button onClick={() => scrollToSection('projects')} className={`transition ${activeSection === 'projects' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Projects</button>
                 <button onClick={() => scrollToSection('skills')} className={`transition ${activeSection === 'skills' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Skills</button>
                 <button onClick={() => scrollToSection('contact')} className={`transition ${activeSection === 'contact' ? 'text-blue-400' : 'hover:text-blue-300'}`}>Contact</button>
@@ -147,7 +147,7 @@ function App() {
               <div className="md:hidden bg-gray-800 py-2">
                 <div className="flex flex-col space-y-3 px-4 pb-3">
                   <button onClick={() => scrollToSection('home')} className={`text-left ${activeSection === 'home' ? 'text-blue-400' : ''}`}>Home</button>
-                  <button onClick={() => scrollToSection('about', 'center')} className={`text-left ${activeSection === 'about' ? 'text-blue-400' : ''}`}>About</button>
+                  <button onClick={() => scrollToSection('about')} className={`text-left ${activeSection === 'about' ? 'text-blue-400' : ''}`}>About</button>
                   <button onClick={() => scrollToSection('projects', 'start')} className={`text-left ${activeSection === 'projects' ? 'text-blue-400' : ''}`}>Projects</button>
                   <button onClick={() => scrollToSection('skills')} className={`text-left ${activeSection === 'skills' ? 'text-blue-400' : ''}`}>Skills</button>
                   <button onClick={() => scrollToSection('contact')} className={`text-left ${activeSection === 'contact' ? 'text-blue-400' : ''}`}>Contact</button>
@@ -179,7 +179,7 @@ function App() {
             <p className="text-xs md:text-xs max-w-sm mx-auto mb-0">(Just kidding)</p>
             {/* </div> */}
             <button 
-              onClick={() => scrollToSection('about', 'center')}
+              onClick={() => scrollToSection('about')}
               className="px-6 py-3 mt-6 bg-blue-700/80 hover:bg-blue-600/90 rounded-md transition">
               Learn More
             </button>
