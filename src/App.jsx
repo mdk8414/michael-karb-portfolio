@@ -200,13 +200,13 @@ function App() {
                 {/* <img src="japan.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
                 {/* <img src="skydive.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
                 <picture class="md:block my-6 w-64 h-64 rounded-full overflow-hidden block border-8 object-bottom border-gray-800">
-                  <img src="italy.jpg" className="w-full h-full object-bottom object-cover rounded-full object-bottom hover:scale-125 ease-in duration-150"/>
+                  <img src="italy.jpg" className="w-full h-full object-bottom object-cover rounded-full object-bottom hover:scale-125 ease-in duration-100"/>
                 </picture>
                 <picture class="hidden md:block my-6 w-64 h-64 rounded-full overflow-hidden block border-8 border-gray-800">
-                  <img src="japan.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-150"/>
+                  <img src="japan.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-100"/>
                 </picture>
                 <picture class="hidden md:block my-6 w-64 h-64 rounded-full overflow-hidden block border-8 border-gray-800">
-                  <img src="ecuador.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-150"/>
+                  <img src="ecuador.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-100"/>
                 </picture>
                 {/* <img src="ecuador.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
                 
@@ -219,33 +219,25 @@ function App() {
               </div>
               <div>
                 <p className="text-lg mb-4">
-                  I'm a software engineer at IBM with a strong focus on building scalable, 
-                  enterprise-grade systems using event-driven architecture, cloud microservices, and intelligent automation. 
-                  
+                  I'm a software engineer at IBM with a strong focus on building scalable, enterprise-grade systems.
                   <br/>
                   <br/>
-
                   Over the past few years, I've led the design and implementation of high-performance services that support critical business functions, 
-                  processing billions of dollars in transactional data, and empowering dozens of engineering teams across the enterprise.
-                  
-                  My expertise lies in designing and implementing low-latency, high-volume backend applications with Java and Python, 
-                  while leveraging industry standard tools like Apache Kafka for event-driven processing, Docker and Kubernetes for cloud deployments, and Jenkins for CI/CD pipelines.  
-                  My contributions have led to significant performance gains, widespread internal adoption, and pending patents.
-                  I'm passionate about solving important technical challenges — whether it's optimizing distributed systems, automating manual tasks,
-                  or architecting simple solutions for complex problems.
-                  
+                  supporting 60+ applications and $30 billion in potential revenue, while empowering dozens of engineering teams and their data across the enterprise. 
+                  My expertise lies in designing and implementing low-latency, high-volume applications, where my contributions have led to significant performance gains, widespread internal adoption, and even pending patents. 
+                  I'm passionate about solving important technical challenges — whether it's optimizing distributed data processing systems, automating cross-service orchestration, or enabling other developers with reusable architecture.
                   <br/>
                   <br/>
-                  
-                  Beyond work, I graduated with a Master's in Computer Science from University of Illinois Urbana-Champaign and enjoy volunteering on meaningful side projects, 
-                  such as building a mobile app for mental health education in Native American communities, or developing multilingual chat assistants to translate online conversations. 
-                  I often leverage programming as a creative outlet, exploring interactive 3D projects using Three.js, developing indie games in Godot, or writing graphics engines with OpenGL.
-                
+                  Beyond work, I graduated with a Master's in Computer Science from the University of Illinois Urbana-Champaign and a Bachelor's in Computer Engineering from the University of Minnesota Twin-Cities. 
+                  I also enjoy volunteering on meaningful side projects, such as building a mobile app for mental health education in Native American communities, or developing multilingual chat assistants to translate online conversations. 
+                  I often leverage programming as a creative outlet, exploring interactive 3D projects using Three.js, developing indie games in Godot, or writing graphics engines with C++ and OpenGL.
                   <br/>
                   <br/>
-
                   Outside of software and engineering, I enjoy traveling, playing volleyball, drawing, watching TV, gaming, and learning about history. 
-                  I also love watching football, and would pay an outrageous amount of money to watch the Bears play in the Superbowl.
+                  I also love watching football, and would pay an outrageous amount of money to watch the Bears play in the Super Bowl.
+                  <br/>
+                  <br/>
+                  <br/>
                 </p>
                 <div className="flex gap-4 mt-6">
                   <a href="Resume.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 border border-blue-500 text-blue-500 bg-gray-900/80 hover:bg-gray-700 hover:text-blue-500 rounded transition">
