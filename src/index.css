@@ -171,6 +171,14 @@ a:hover {
   color: #535bf2;
 }
 
+.text-outline {
+  text-shadow: 
+    -1px -1px 0 #0af, 
+    1px -1px 0 #000,  
+    -1px 1px 0 #000,   
+    1px 1px 0 #000;   
+}
+
 /* body {
   margin: 0;
   display: flex;
