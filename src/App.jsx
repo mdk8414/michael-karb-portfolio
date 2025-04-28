@@ -169,20 +169,34 @@ function App() {
         <FadeInSection>
         <section id="home" className="min-h-screen flex items-center justify-center relative ">
           {/* <Background /> */}
-          <div className="text-center z-10 rounded-full ">
-            <h1 className="text-5xl md:text-6xl font-bold mb-4">Michael Karb</h1>
-            <div className="flex justify-center mb-6"></div>
+          <div className="text-center z-10 shadow ">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6">Michael Karb</h1>
+            {/* vvv Kinda cool gradient font vvv */}
+            {/* <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">Michael Karb</h1> */}
+            {/* <div className="flex justify-center mb-4"></div> */}
       
             {/* <div className='justify-center items-center bg-gray-700/30 rounded-full px-6 py-8'> */}
             <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-2 ">I made this website so AI doesn't take my job.</p>
+            <p className="text-gray-300/10 hover:text-gray-300 ease-in duration-100 text-lg md:text-xl max-w-xl mx-auto mb-2">(AI made this website)</p>
+            <p className="text-gray-300/10 hover:text-gray-300 ease-in duration-100 text-xs md:text-xs max-w-sm mx-auto mb-0">(Just kidding)</p>
+            {/* <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-2 ">I made this website so AI doesn't take my job.</p>
             <p className="text-lg md:text-xl max-w-xl mx-auto mb-2">(AI made this website)</p>
-            <p className="text-xs md:text-xs max-w-sm mx-auto mb-0">(Just kidding)</p>
+            <p className="text-xs md:text-xs max-w-sm mx-auto mb-0">(Just kidding)</p> */}
             {/* </div> */}
-            <button 
+            {/* <button 
               onClick={() => scrollToSection('about')}
-              className="px-6 py-3 mt-6 bg-blue-700/80 hover:bg-blue-600/90 rounded-md transition">
-              Learn More
-            </button>
+              className="text-2xl px-6 py-3 bg-transparent outline-transparent focus:outline-none mt-6 ease-in duration-200 rounded-md transition">
+              <div className="hover:text-blue-300 hover:text-3xl ease-in duration-200">Learn More</div>
+              Learn More */}
+            {/* </button> */}
+            <div className="flex flex-col">
+              <a
+                onClick={() => scrollToSection('about')}
+                className="cursor-pointer font-bold text-3xl text-blue-400 mt-4 hover:text-blue-500 hover:text-4xl ease-in duration-200"
+              >
+                Learn More
+              </a>
+            </div>
           </div>
         </section>
         </FadeInSection>
@@ -192,47 +206,41 @@ function App() {
         <section id="about" className="py-20 px-4 relative">
         
           <div className="py-10 px-10 max-w-5xl mx-auto bg-gray-700/90 rounded-3xl">
-            <h2 className="text-3xl font-bold mb-8 text-center">About me</h2>
+            <h2 className="text-3xl font-bold mb-8 text-center ease-in duration-200">About me</h2>
             <div className="flex flex-col md:flex-row gap-8 ">
               <div className="w-64 h-64 rounded-full flex-shrink-0">
-                {/* Profile image placeholder */}
-                {/* <img src="italy.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800 object-bottom"/> */}
-                {/* <img src="japan.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
-                {/* <img src="skydive.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
                 <picture class="md:block my-6 w-64 h-64 rounded-full overflow-hidden block border-8 object-bottom border-gray-800">
-                  <img src="italy.jpg" className="w-full h-full object-bottom object-cover rounded-full object-bottom hover:scale-125 ease-in duration-100"/>
+                  <img src="Me/italy.jpg" className="w-full h-full object-bottom object-cover rounded-full object-bottom hover:scale-125 ease-in duration-100"/>
                 </picture>
                 <picture class="hidden md:block my-6 w-64 h-64 rounded-full overflow-hidden block border-8 border-gray-800">
-                  <img src="japan.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-100"/>
+                  <img src="Me/japan.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-100"/>
                 </picture>
                 <picture class="hidden md:block my-6 w-64 h-64 rounded-full overflow-hidden block border-8 border-gray-800">
-                  <img src="ecuador.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-100"/>
+                  <img src="Me/ecuador.jpg" className="w-full h-full rounded-full object-cover hover:scale-125 ease-in duration-100"/>
                 </picture>
-                {/* <img src="ecuador.jpg" className="my-6 w-64 h-64 rounded-full object-cover border-8 border-gray-800"/> */}
-                
-                {/* <div className="w-64 h-64 rounded-full border-2 border-gray-500 object-bottom">
-                  <img src="italy.jpg" className="z-1 w-64 h-64 rounded-full object-cover"/>
-                </div> */}
-                {/* <div className="w-full h-full rounded-full flex items-center justify-center text-center">
-                  <img src="headshot.jpeg" className="my-3 rounded-full object-cover border-8 border-gray-900"/>
-                </div> */}
               </div>
               <div>
-                <p className="text-lg mb-4">
+                <p className="text-lg mb-4 hover:text-xl hover:text-blue-300 ease-in duration-200">
                   I'm a software engineer at IBM with a strong focus on building scalable, enterprise-grade systems.
                   <br/>
                   <br/>
+                  </p>
+                  <p className="text-lg mb-4 hover:text-xl hover:text-blue-300 ease-in duration-200">
                   Over the past few years, I've led the design and implementation of high-performance services that support critical business functions, 
                   supporting 60+ applications and $30 billion in potential revenue, while empowering dozens of engineering teams and their data across the enterprise. 
                   My expertise lies in designing and implementing low-latency, high-volume applications, where my contributions have led to significant performance gains, widespread internal adoption, and even pending patents. 
                   I'm passionate about solving important technical challenges — whether it's optimizing distributed data processing systems, automating cross-service orchestration, or enabling other developers with reusable architecture.
                   <br/>
                   <br/>
+                  </p>
+                  <p className="text-lg mb-4 hover:text-xl hover:text-blue-300 ease-in duration-200">
                   Beyond work, I graduated with a Master's in Computer Science from the University of Illinois Urbana-Champaign and a Bachelor's in Computer Engineering from the University of Minnesota Twin-Cities. 
                   I also enjoy volunteering on meaningful side projects, such as building a mobile app for mental health education in Native American communities, or developing multilingual chat assistants to translate online conversations. 
                   I often leverage programming as a creative outlet, exploring interactive 3D projects using Three.js, developing indie games in Godot, or writing graphics engines with C++ and OpenGL.
                   <br/>
                   <br/>
+                  </p>
+                  <p className="text-lg mb-4 hover:text-xl hover:text-blue-300 ease-in duration-200">
                   Outside of software and engineering, I enjoy traveling, playing volleyball, drawing, watching TV, gaming, and learning about history. 
                   I also love watching football, and would pay an outrageous amount of money to watch the Bears play in the Super Bowl.
                   <br/>
