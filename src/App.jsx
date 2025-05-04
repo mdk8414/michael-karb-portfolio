@@ -742,6 +742,12 @@ const FadeInSection = ({ children, threshold = 0.3 }) => {
   }, threshold)
 
   useEffect(() => {
+    // Disable fade-in on mobile
+    if (window.innerWidth < 768) {
+      setIsVisible(true); // Always visible on mobile
+      return;
+    }
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         // Update state when intersection status changes
