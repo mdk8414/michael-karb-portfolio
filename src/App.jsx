@@ -747,7 +747,7 @@ const FadeInSection = ({ children, threshold = 0.3 }) => {
       setIsVisible(true); // Always visible on mobile
       return;
     }
-    
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         // Update state when intersection status changes
@@ -780,7 +780,7 @@ const FadeInSection = ({ children, threshold = 0.3 }) => {
 }`;
   
   return (
-    <div ref={sectionRef} className={fadeClasses}>
+    <div ref={sectionRef} className={`hidden sm:block ${fadeClasses}`}>
       {children}
     </div>
   );
