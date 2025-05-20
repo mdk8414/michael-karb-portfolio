@@ -248,7 +248,7 @@ function App() {
                   <br/>
                 </p>
                 <div className="flex gap-4 mt-6">
-                  <a href="Resume.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 border border-blue-500 text-blue-500 bg-gray-900/80 hover:bg-gray-700 hover:text-blue-500 rounded transition">
+                  <a href="Michael_Karb_Resume_MASTER.pdf" target="_blank" rel="noopener noreferrer" className="px-4 py-2 border border-blue-500 text-blue-500 bg-gray-900/80 hover:bg-gray-700 hover:text-blue-500 rounded transition">
                     {/* Download Resume */}
                     Resume
                   </a>
