@@ -220,27 +220,26 @@ function App() {
                 </picture>
               </div>
               <div>
-                <p className="text-lg mb-4 hover:text-xl hover:text-blue-300 ease-in duration-200">
-                  I'm a software engineer at IBM with a strong focus on building scalable, enterprise-grade systems.
+                <p className="group text-lg mb-4">
+                  I'm a <AnimatedBlueText>software engineer at IBM</AnimatedBlueText> with a strong focus on building scalable, enterprise-grade systems.
                   <br/>
                   <br/>
                   </p>
-                  <p className="text-lg mb-4 hover:text-xl hover:text-blue-300 ease-in duration-200">
-                  Over the past few years, I've led the design and implementation of high-performance services that support critical business functions, 
-                  supporting 60+ applications and $30 billion in potential revenue, while empowering dozens of engineering teams and their data across the enterprise. 
+                  <p className="group text-lg mb-4">
+                  Over the past few years, I've led the design and implementation of high-performance services that support critical business functions, <AnimatedBlueText>supporting 60+ applications</AnimatedBlueText> and <AnimatedBlueText>$30 billion in potential revenue</AnimatedBlueText>, while empowering dozens of engineering teams and their data across the enterprise. 
                   My expertise lies in designing and implementing low-latency, high-volume applications, where my contributions have led to significant performance gains, widespread internal adoption, and even pending patents. 
                   I'm passionate about solving important technical challenges — whether it's optimizing distributed data processing systems, automating cross-service orchestration, or enabling other developers with reusable architecture.
                   <br/>
                   <br/>
                   </p>
-                  <p className="text-lg mb-4 hover:text-xl hover:text-blue-300 ease-in duration-200">
-                  Beyond work, I graduated with a Master's in Computer Science from the University of Illinois Urbana-Champaign and a Bachelor's in Computer Engineering from the University of Minnesota Twin-Cities. 
+                  <p className="group text-lg mb-4">
+                  Beyond work, I graduated with a <AnimatedBlueText>Master's in Computer Science</AnimatedBlueText> from the <AnimatedBlueText>University of Illinois Urbana-Champaign</AnimatedBlueText> and a <AnimatedBlueText>Bachelor's in Computer Engineering</AnimatedBlueText> from the <AnimatedBlueText>University of Minnesota Twin-Cities</AnimatedBlueText>. 
                   I also enjoy volunteering on meaningful side projects, such as building a mobile app for mental health education in Native American communities, or developing multilingual chat assistants to translate online conversations. 
                   I often leverage programming as a creative outlet, exploring interactive 3D projects using Three.js, developing indie games in Godot, or writing graphics engines with C++ and OpenGL.
                   <br/>
                   <br/>
                   </p>
-                  <p className="text-lg mb-4 hover:text-xl hover:text-blue-300 ease-in duration-200">
+                  <p className="group text-lg mb-4">
                   Outside of software and engineering, I enjoy traveling, playing volleyball, drawing, watching TV, gaming, and learning about history. 
                   I also love watching football, and would pay an outrageous amount of money to watch the Bears play in the Super Bowl.
                   <br/>
@@ -776,8 +775,7 @@ const FadeInSection = ({ children, threshold = 0.3 }) => {
   }, [threshold]);
   
   // Apply transition classes conditionally based on visibility
-  const fadeClasses = `transition-all duration-[1000ms] ease-in-out transform ${isVisible ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-6"
-}`;
+  const fadeClasses = `transition-all duration-[1000ms] ease-in-out transform ${isVisible ? "opacity-100" : "opacity-0"}`;
   
   return (
     <div ref={sectionRef} className={fadeClasses}>
@@ -785,3 +783,12 @@ const FadeInSection = ({ children, threshold = 0.3 }) => {
     </div>
   );
 };
+
+const AnimatedBlueText = ({ children }) => {
+  return (
+    // <span className="transition-all transform group-hover:text-xl group-hover:text-blue-300 ease-in duration-200">
+    <span>
+      {children}
+    </span>
+  )
+}
