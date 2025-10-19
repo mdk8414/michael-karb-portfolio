@@ -177,8 +177,8 @@ function App() {
       
             {/* <div className='justify-center items-center bg-gray-700/30 rounded-full px-6 py-8'> */}
             <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-2 ">I made this website so AI doesn't take my job.</p>
-            <p className="text-gray-300/10 hover:text-gray-300 ease-in duration-100 text-lg md:text-xl max-w-xl mx-auto mb-2">(AI made this website)</p>
-            <p className="text-gray-300/10 hover:text-gray-300 ease-in duration-100 text-xs md:text-xs max-w-sm mx-auto mb-0">(Just kidding)</p>
+            {/* <p className="text-gray-300/10 hover:text-gray-300 ease-in duration-100 text-lg md:text-xl max-w-xl mx-auto mb-2">(AI made this website)</p> */}
+            {/* <p className="text-gray-300/10 hover:text-gray-300 ease-in duration-100 text-xs md:text-xs max-w-sm mx-auto mb-0">(Just kidding)</p> */}
             {/* <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-2 ">I made this website so AI doesn't take my job.</p>
             <p className="text-lg md:text-xl max-w-xl mx-auto mb-2">(AI made this website)</p>
             <p className="text-xs md:text-xs max-w-sm mx-auto mb-0">(Just kidding)</p> */}
